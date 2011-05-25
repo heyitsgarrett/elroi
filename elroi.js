@@ -1,4 +1,4 @@
-(function(ei, $) {
+(function($) {
 
     /**
      * Creates an graph in a given empty div
@@ -103,7 +103,7 @@
         var width = $paper.width() || $el.width(),
             height = $paper.height() || $el.height();
 
-        var graph = ei.elroi.init({
+        var graph = elroi.init({
             padding : options.padding,
             labelLineHeight: 12,
             width: width,
@@ -203,5 +203,5 @@
         };
     }
 
-    ei.elroi = function(args) { if (args) { return new elroi(args); } };
-})(ei, jQuery);
+    window.elroi = function(args) { if (args) { return new elroi(args); } };
+})(jQuery);
