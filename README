@@ -1,1 +1,20 @@
-Elroi is a graphing library built for OPOWER's Astro web application. It is based on the Raphael JavaScript graphing library.
+Elroi is a graphing library built for OPOWER's Astro web application
+
+It is based on the Raphael JavaScript graphing library.
+
+
+Development
+-----------
+There are two scripts to aid in developing elroi:
+  bin/combine.sh -- Combines all of the elroi source files into a single elroi.js library.
+  bin/watch.rb   -- When invoked, this script listens for changes in the working directory
+                    and runs combine.sh to regenerate the elroi.js library.
+
+                    The list of directories that watch.rb will listen to is defined in
+                    watchr_script.file
+
+Development Requirements
+------------------------
+To work with combine.sh and watch.rb, you'll need to install two ruby gems:
+  gem install watchr
+  gem install sprockets
