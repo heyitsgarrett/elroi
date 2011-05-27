@@ -1,0 +1,9 @@
+def run_combine
+  puts 'Regenerating elroi.js'
+  %x[./bin/combine.sh]
+end
+
+watch( 'lib/(.*)\.js' ) { run_combine }
+watch( 'bin/combine.sh' ) { run_combine }
+
+

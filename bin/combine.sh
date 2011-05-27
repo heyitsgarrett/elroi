@@ -1,2 +1,3 @@
 #!/bin/sh
-sprocketize lib/init.js lib/grid.js lib/core.js > elroi.js
+sprocketize lib/core.js lib/init.js lib/grid.js lib/lines.js lib/pie.js lib/stackedBar.js > elroi.js
+

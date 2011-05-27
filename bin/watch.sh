@@ -1,2 +1,2 @@
 #!/bin/sh
-watchr bin/watchr_script.file
+watchr config/watchr_script.file

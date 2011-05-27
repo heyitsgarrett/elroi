@@ -1,3 +1,0 @@
-watch( 'lib/(.*)\.js' ) {|match_data_object|
-  %x[./bin/combine.sh]
-}
