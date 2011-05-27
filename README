@@ -18,3 +18,9 @@ Development Requirements
 To work with combine.sh and watch.rb, you'll need to install two ruby gems:
   gem install watchr
   gem install sprockets
+
+Test
+----
+
+Tests are written in QUnit. To run the tests, open this in any browser:
+  test/index.html
