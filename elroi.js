@@ -1086,7 +1086,7 @@
         };
     }
 
-    elroi.fn.lines = lines;
+    elroi.fn.line = lines;
 
 })(elroi);
 (function(elroi, $) {
