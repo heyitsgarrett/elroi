@@ -59,32 +59,32 @@
     });
 
     Q.test('elroi has data tests', function() {
-        Q.equal(elroi.helpers.hasData([]), false, "No data at all");
-        Q.equal(elroi.helpers.hasData([{series: []}]), false, "Series data, but it's empty");
-        Q.equal(elroi.helpers.hasData([{series: [10,20,30]}]), true, "A valid set of data for graphing");
+        Q.equal(elroi.fn.helpers.hasData([]), false, "No data at all");
+        Q.equal(elroi.fn.helpers.hasData([{series: []}]), false, "Series data, but it's empty");
+        Q.equal(elroi.fn.helpers.hasData([{series: [10,20,30]}]), true, "A valid set of data for graphing");
     });
 
     Q.test('elroi initialization', function() {
 
         var expectedLineGraphDataValues = [[1,2,3,4,5,6,7,8,9,10]],
-                actualLineGraphDataValues = elroi.helpers.getDataValues(testSeries, [{type:'line'}]);
+                actualLineGraphDataValues = elroi.fn.helpers.getDataValues(testSeries, [{type:'line'}]);
         Q.deepEqual(actualLineGraphDataValues, expectedLineGraphDataValues, 'Data values for line graphs are correct');
 
         var expectedBarGraphDataValues = [[7,9,11,13,15]],
-                actualBarGraphDataValues = elroi.helpers.getDataValues(testSeries, [{type:'stackedBar'}]);
+                actualBarGraphDataValues = elroi.fn.helpers.getDataValues(testSeries, [{type:'stackedBar'}]);
         Q.deepEqual(actualBarGraphDataValues, expectedBarGraphDataValues, 'Data values for bar graphs are correct');
 
         var expectedNoDataSet = [[0]],
-                actualNoDataSet = elroi.helpers.getDataValues('', [{type:'stackedBar'}]);
+                actualNoDataSet = elroi.fn.helpers.getDataValues('', [{type:'stackedBar'}]);
         Q.deepEqual(actualNoDataSet, expectedNoDataSet, 'Data values are defined when there is no data');
 
         var expectedSumSeries = [55],
-                actualSumSeries = elroi.helpers.sumSeries(expectedLineGraphDataValues);
+                actualSumSeries = elroi.fn.helpers.sumSeries(expectedLineGraphDataValues);
         Q.deepEqual(actualSumSeries, expectedSumSeries, 'Series sum is correct');
 
-        var shouldHavePointFlags = elroi.helpers.hasPointFlags(testSeries);
+        var shouldHavePointFlags = elroi.fn.helpers.hasPointFlags(testSeries);
         Q.equal(shouldHavePointFlags, true, 'Has point flags');
-        var shouldNotHavePointFlags = elroi.helpers.hasPointFlags(testSeriesNoFlags);
+        var shouldNotHavePointFlags = elroi.fn.helpers.hasPointFlags(testSeriesNoFlags);
         Q.equal(shouldNotHavePointFlags, false, 'Does not have point flags');
 
     });
@@ -98,9 +98,7 @@
      *   - testing all of elroi's features
      * We may break these into separate files because there is a lot of data.
      */
-    /*
 
-    Disabled because it somehow broke hudson.
 
     Q.test('elroi visual test 1 - line graph', function() {
         var $graph = $('<div/>')
@@ -108,7 +106,7 @@
                         .appendTo($('#test'));
 
 
-        var elroi = elroi({
+        var e = elroi({
             $el: $graph,
             data:
             [
@@ -225,10 +223,8 @@
             ]
         });
 
-        elroi.draw();
+        e.draw();
 
     });
-
-    */
 
 }(QUnit, jQuery, elroi));
