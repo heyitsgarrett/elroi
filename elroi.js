@@ -781,6 +781,7 @@
                 yLabels = getYLabels(maxVal, minVal, precision),
                 avalaibleArea = graph.height - graph.padding.top - graph.padding.bottom;
 
+            console.log('ylabels',yLabels);
             while(containsDupes(yLabels)) {
                 precision++;
                 yLabels = getYLabels(maxVal, minVal, precision);
@@ -1633,6 +1634,6 @@
         };
     }
 
-    elroi.stackedBars = stackedBars;
+    elroi.fn.stackedBar = stackedBars;
 
 })(elroi, jQuery);
