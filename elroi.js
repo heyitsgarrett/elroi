@@ -551,7 +551,8 @@
 
         var numPoints = !hasData ? 1 : graph.allSeries[0].series[0].length;
 
-        var showEvery = (numPoints > graph.options.skipPointThreshhold) ? Math.round(numPoints / graph.options.skipPointThreshhold) : 1;
+        var showEvery = graph.options.showEvery ||
+                ((numPoints > graph.options.skipPointThreshhold) ? Math.round(numPoints / graph.options.skipPointThreshhold) : 1);
 
         var xTick = (graph.width - graph.padding.left - graph.padding.right) / numPoints;
         var yTicks = [];
