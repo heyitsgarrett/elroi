@@ -77,6 +77,19 @@
           </pre>
         </div>
         
+        <div class="sample" id="bar">
+          <h2>Bar Graph</h2>
+          <div class="graph"></div>
+          <pre>
+            elroi(
+              { $el:$('#bar').find('.graph'), 
+                data: [{series:testSeries, options: {type:'bar'}}]
+              })
+              .draw();
+            
+          </pre>
+        </div>
+        
         <div class="sample" id="pie">
           <h2>Pie Chart</h2>
           <div class="graph"></div>

@@ -14,7 +14,7 @@
 
 .elroi .elroi-tooltip {
   border: none;
-  background: transparent url(../../../images/Triangle-down.png) bottom center no-repeat;
+/*  background: transparent url(../../../images/Triangle-down.png) bottom center no-repeat;*/
   padding: 0 0 10px 0;
   left: -1000px;
   position: absolute;

@@ -34,5 +34,5 @@ $(document).ready(function(){
     var line = elroi({$el:$('#line').find('.graph'), data: [{series:testSeries, options: {type:'line'}}]}).draw();
     var stackedBar = elroi({$el:$('#stacked-bar').find('.graph'), data: [{series:testSeries, options: {type:'stackedBar'}}]}).draw();
     var pie = elroi({$el:$('#pie').find('.graph'), data: [{series:testSeries, options: {type:'pie'}}]}).draw();
-    
+    var bar = elroi({ $el:$('#bar').find('.graph'), data: [{series:testSeries, options: {type:'bar'}}]}).draw();
 });
