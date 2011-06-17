@@ -31,8 +31,31 @@ $(document).ready(function(){
         ]
     ];
     
+    var tooltips = ['tip 1', 'tip 2', 'tip 3', 'tip 4', 'tip 5', 'tip 6', 'tip 7', 'tip 8', 'tip', 'tip', 'tip', 'tip'];
+    var tipFormat = function(tip) {
+        var formatted = '<p>' + tip + '</p>';
+      return  formatted; 
+    };
+    
     var line = elroi({$el:$('#line').find('.graph'), data: [{series:testSeries, options: {type:'line'}}]}).draw();
-    var stackedBar = elroi({$el:$('#stacked-bar').find('.graph'), data: [{series:testSeries, options: {type:'stackedBar'}}]}).draw();
+    var stackedBar = elroi(
+        {
+            $el:$('#stacked-bar').find('.graph'), 
+            data: [{series:testSeries, options: {type:'stackedBar'}}],
+            options: {
+                tooltip : {
+                    formatter: tipFormat
+                }
+            },
+            tooltips: tooltips
+        }
+    ).draw();
     var pie = elroi({$el:$('#pie').find('.graph'), data: [{series:testSeries, options: {type:'pie'}}]}).draw();
-    var bar = elroi({ $el:$('#bar').find('.graph'), data: [{series:testSeries, options: {type:'bar'}}]}).draw();
+    var bar = elroi({ $el:$('#bar').find('.graph'), data: [{series:testSeries, options: {type:'bar'}}],
+    options: {
+        tooltip : {
+            formatter: tipFormat
+        }
+    },
+    tooltips: tooltips}).draw();
 });
