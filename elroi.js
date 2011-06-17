@@ -101,7 +101,7 @@
         };
 
         var $el = $(args.$el)
-                    .addClass('graph'),  //CR: change to .elroi because .graph is too easy to use for other things
+                    .addClass('elroi'),
             $paper = $('<div></div>')
                         .addClass('paper')
                         .appendTo($el),
@@ -123,7 +123,7 @@
             tooltips: args.tooltips
         });
 
-        var html = '<div class="graph-tooltip"><div class="tooltip-content rounded bgFadeWhite"></div></div>';
+        var html = '<div class="elroi-tooltip"><div class="elroi-tooltip-content"></div></div>';
         graph.$tooltip = $(html);
 
         graph.$tooltip.width(graph.options.tooltip.width).appendTo($el.find('.paper')).addClass('png-fix');
@@ -139,7 +139,7 @@
             var isGridDrawn = false;
 
             if(graph.options.errorMessage) {
-                 var $errorMsg = $('<div id="graph-error">' + graph.options.errorMessage + '</div>')
+                 var $errorMsg = $('<div class="elroi-error">' + graph.options.errorMessage + '</div>')
                     .addClass('alert box');
 
                 graph.$el.find('.paper').prepend($errorMsg);
@@ -170,8 +170,8 @@
             graph.paper.clear();
 
             graph.$el.find('ul').remove();
-            graph.$el.find('.point-flag').remove();
-            graph.$el.find('.point-label').remove();
+            graph.$el.find('.elroi-point-flag').remove();
+            graph.$el.find('.elroi-point-label').remove();
         }
 
         /**
@@ -179,7 +179,6 @@
          * @param newData A new data object to be graphed
          */
         function update(newData) {
-
            clearGraph();
            graph.allSeries = newData;
 
@@ -976,7 +975,7 @@
 
             if (!isOffGraph && isInSetToShow) {
                 var pointLabel = document.createElement("span");
-                $(pointLabel).addClass('point-label').html(Math.round(value) + " " + units).css({
+                $(pointLabel).addClass('elroi-point-label').html(Math.round(value) + " " + units).css({
                     'left': x - pointOffset,
                     'bottom': graph.paper.height - y - graph.labelLineHeight - pointOffset,
                     'width': graph.labelWidth,
@@ -1316,7 +1315,7 @@
                 animEndCurvePoint = getCoords(animStartPoint, radius, endAngle),
                 animPath = getWedgePath(animStartPoint, radius, animStartCurvePoint, animEndCurvePoint),
 
-                $valFlag = $('<div>').addClass('point-flag').html(value);
+                $valFlag = $('<div>').addClass('elroi-point-flag').html(value);
 
             graph.$el.find('.paper').append($valFlag);
 
@@ -1499,7 +1498,7 @@
 
                     if (series[i].pointFlag && (seriesCount == graph.allSeries[0].series.length)) {
                             var $pointFlag = series[i].pointFlag;
-                            $pointFlag.addClass('point-flag png-fix').appendTo(graph.$el.find('.paper'));
+                            $pointFlag.addClass('elroi-point-flag').appendTo(graph.$el.find('.paper'));
 
                             var pointFlagY;
                             if (graph.options.bars.flagPosition == 'interior' && $pointFlag.outerHeight() < totalBarHeights) {
