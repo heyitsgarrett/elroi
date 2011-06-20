@@ -1408,7 +1408,7 @@
                 }
             });
 
-            flags = graph.$el.find('.point-flag');
+            flags = graph.$el.find('.elroi-point-flag');
             flags.hide();
 
             selectedWedge = wedges[0];
