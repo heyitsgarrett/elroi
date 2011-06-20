@@ -1551,9 +1551,8 @@
             for(var i = 0; i < series.length; i++) {
 
                 barHeight = isStacked ? (total * yTick) + graph.options.bars.highlightBorderWidth :
-                    series[i][index].value * yTick + + graph.options.bars.highlightBorderWidth;
+                    series[i][index].value * yTick + graph.options.bars.highlightBorderWidth;
                 y = graph.height - barHeight - graph.padding.bottom + graph.padding.top + (graph.options.bars.highlightBorderWidth/2);
-
 
                 rolloverX = isStacked ? x : x + barWidth * i;
                 var rollOverBar = graph.paper
@@ -1577,12 +1576,13 @@
                         });
             }
 
+            var tallestBarHeight = isStacked ? barHeight : total * yTick + graph.options.bars.highlightBorderWidth;
             $(rollOverTargetBar.node).hover(
                 function() {
                     rolloverBars.attr('stroke-opacity', graph.options.bars.highlightBorderOpacity);
                     if (graph.options.tooltip.show) {
                         var tipX = x + barWidth / 2 - graph.options.tooltip.width / 2;
-                        var tipY = barHeight + graph.options.flagOffset + graph.options.bars.highlightBorderWidth;
+                        var tipY = tallestBarHeight + graph.options.flagOffset + graph.options.bars.highlightBorderWidth;
                         graph.$tooltip.stop().animate({bottom: tipY, left:tipX }, 1, function() {
                             var tipContent = graph.options.tooltip.formatter(graph.tooltips[index], graph.options.messages);
                             graph.$tooltip.find('.elroi-tooltip-content').html(tipContent);
