@@ -126,7 +126,7 @@
         var html = '<div class="elroi-tooltip"><div class="elroi-tooltip-content"></div></div>';
         graph.$tooltip = $(html);
 
-        graph.$tooltip.width(graph.options.tooltip.width).appendTo($el.find('.paper'));
+        graph.$tooltip.width(graph.options.tooltip.width).appendTo($el.find('.paper')).addClass('png-fix');
         $el.mouseleave(function() {
             graph.$tooltip.css('left', -10000);
         });
