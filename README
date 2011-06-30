@@ -24,3 +24,10 @@ Test
 
 Tests are written in QUnit. To run the tests, open this in any browser:
   test/index.html
+
+Usage
+-----
+
+For usage examples, see
+  examples/index.html
+  examples/examples.js
