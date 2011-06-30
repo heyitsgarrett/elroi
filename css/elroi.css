@@ -1,66 +1,66 @@
 /* Styles used for all graphs */
 /* graph needs to have an explicitly height & width - set it in the page specific css */
-.graph {
+.elroi {
   position: relative;
-  z-index: 2; }
+  z-index: 2; 
+}
 
-.graph .paper {
+.elroi .paper {
   position: relative;
   width: 620px;
   height: 270px;
-  z-index: 2; }
+  z-index: 2; 
+}
 
-.graph .graph-tooltip {
+.elroi .elroi-tooltip {
   border: none;
-  background: transparent url(../../../images/Triangle-down.png) bottom center no-repeat;
   padding: 0 0 10px 0;
   left: -1000px;
   position: absolute;
   width: 120px;
-  z-index: 4; }
+  z-index: 4; 
+}
 
-.graph .graph-tooltip .tooltip-content {
+.elroi .elroi-tooltip .elroi-tooltip-content {
+    background: #fff;
   border: 4px solid #ccc;
   font-size: 12px;
   line-height: 15px;
   padding: 5px;
-  text-align: center; }
+  text-align: center; 
+}
 
-.graph .graph-tooltip .tooltip-content .estimated {
-  padding: 5px 0; }
 
 /* Graph error
 ------------------------------ */
-#graph-error {
+.elroi-error {
   font-size: 12px;
   left: 40px;
   position: absolute;
   text-align: center;
   top: 25px;
   width: 540px;
-  z-index: 3; }
+  z-index: 3; 
+}
 
-.graph .graph-tooltip .flag {
+.elroi .elroi-tooltip .elroi-flag {
   font-weight: bold;
   padding: 4px;
-  text-align: center; }
+  text-align: center; 
+}
 
-.graph .graph-tooltip.date {
-  /* nothing special */ }
-
-.graph .graph-tooltip .total {
-  font-weight: bold; }
-
-.graph .x-ticks, .graph .y-ticks {
+.elroi .x-ticks, .elroi .y-ticks {
   z-index: 1;
-  list-style-type: none; }
+  list-style-type: none; 
+}
 
-.graph .x-ticks li {
-  padding-top: 5px; }
+.elroi .x-ticks li {
+  padding-top: 5px; 
+}
 
-.graph .y-ticks li,
-.graph .x-ticks li,
-.graph .point-label {
+.elroi .y-ticks li,
+.elroi .x-ticks li,
+.elroi .point-label {
   color: #888;
   font-size: 12px;
   line-height: 12px;
@@ -68,96 +68,26 @@
   text-align: center;
   z-index: 1; }
 
-.graph .point-label {
-  font-size: 10px; }
+.elroi .point-label {
+  font-size: 10px; 
+}
 
-.graph .x-ticks.x2 li {
+.elroi .x-ticks.x2 li {
   color: #222;
-  font-size: 14px; }
+  font-size: 14px;
+}
 
-.graph .point-label {
+.elroi .point-label {
   font-weight: bold;
-  white-space: nowrap; }
+  white-space: nowrap;
+}
 
 /* Point flags */
-.graph .point-flag {
+.elroi .elroi-point-flag {
   position: absolute;
   text-align: center;
   font-size: 12px;
-  padding: 0 0 10px 0; }
+  padding: 0 0 10px 0;
+}
 
-.graph .peak-flag {
-  position: absolute;
-  text-align: center;
-  background: transparent url(../../../images/Triangle-down.png) bottom center no-repeat;
-  width: 70px;
-  padding: 0 0 10px 0; }
 
-.graph .peak-flag .peak-content,
-.graph .point-flag .flag-content {
-  color: #000;
-  background-color: #fff;
-  border: 4px solid #ccc;
-  padding: 5px;
-  text-align: center; }
-
-.graph .hourly-ticks {
-  font-size: 12px;
-  padding-left: 50px;
-  padding-right: 24px;
-  height: 40px;
-  position: relative; }
-
-.graph .hourly-ticks DIV {
-  height: 40px;
-  float: left;
-  position: relative; }
-
-.graph .hourly-ticks .morning {
-  width: 30%; }
-
-.graph .hourly-ticks .day {
-  width: 50%; }
-
-.graph .hourly-ticks .night {
-  width: 20%; }
-
-.graph .hourly-ticks SPAN {
-  padding: 0 2px;
-  top: 0; }
-
-.graph .hourly-ticks .icon {
-  position: absolute;
-  top: 20px;
-  width: 38px;
-  height: 38px; }
-
-.graph .hourly-ticks .morning .icon {
-  left: 4%; }
-
-.graph .hourly-ticks .day .icon {
-  left: 36.5%; }
-
-.graph .hourly-ticks .night .icon {
-  left: 76%; }
-
-.graph .hourly-ticks .right {
-  position: absolute;
-  top: 0;
-  right: 0; }
-
-.graph .hourly-ticks .middle {
-  position: absolute;
-  top: 0;
-  left: 35%; }
-
-/* Bar Chart: Basic 
-
-   As used on Dashboard - Heating/Cooling Comparison
-*/
-.graph-basic-bar .x-ticks li {
-  font-size: 14px;
-  line-height: 18px; }
-
-.graph-basic-bar .x-ticks li strong {
-  color: #222; }

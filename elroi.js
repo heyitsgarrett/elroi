@@ -101,7 +101,7 @@
         };
 
         var $el = $(args.$el)
-                    .addClass('graph'),  //CR: change to .elroi because .graph is too easy to use for other things
+                    .addClass('elroi'),
             $paper = $('<div></div>')
                         .addClass('paper')
                         .appendTo($el),
@@ -123,7 +123,7 @@
             tooltips: args.tooltips
         });
 
-        var html = '<div class="graph-tooltip"><div class="tooltip-content rounded bgFadeWhite"></div></div>';
+        var html = '<div class="elroi-tooltip"><div class="elroi-tooltip-content"></div></div>';
         graph.$tooltip = $(html);
 
         graph.$tooltip.width(graph.options.tooltip.width).appendTo($el.find('.paper')).addClass('png-fix');
@@ -139,7 +139,7 @@
             var isGridDrawn = false;
 
             if(graph.options.errorMessage) {
-                 var $errorMsg = $('<div id="graph-error">' + graph.options.errorMessage + '</div>')
+                 var $errorMsg = $('<div class="elroi-error">' + graph.options.errorMessage + '</div>')
                     .addClass('alert box');
 
                 graph.$el.find('.paper').prepend($errorMsg);
@@ -170,8 +170,8 @@
             graph.paper.clear();
 
             graph.$el.find('ul').remove();
-            graph.$el.find('.point-flag').remove();
-            graph.$el.find('.point-label').remove();
+            graph.$el.find('.elroi-point-flag').remove();
+            graph.$el.find('.elroi-point-label').remove();
         }
 
         /**
@@ -179,7 +179,6 @@
          * @param newData A new data object to be graphed
          */
         function update(newData) {
-
            clearGraph();
            graph.allSeries = newData;
 
@@ -977,7 +976,7 @@
 
             if (!isOffGraph && isInSetToShow) {
                 var pointLabel = document.createElement("span");
-                $(pointLabel).addClass('point-label').html(Math.round(value) + " " + units).css({
+                $(pointLabel).addClass('elroi-point-label').html(Math.round(value) + " " + units).css({
                     'left': x - pointOffset,
                     'bottom': graph.paper.height - y - graph.labelLineHeight - pointOffset,
                     'width': graph.labelWidth,
@@ -1157,7 +1156,7 @@
                         left: x
                     }, 1, function(){
                         var tipContent = graph.options.tooltip.formatter(graph.tooltips[index], graph.options.messages);
-                        graph.$tooltip.find('.tooltip-content').html(tipContent);
+                        graph.$tooltip.find('.elroi-tooltip-content').html(tipContent);
                     });
                 }
 
@@ -1317,7 +1316,7 @@
                 animEndCurvePoint = getCoords(animStartPoint, radius, endAngle),
                 animPath = getWedgePath(animStartPoint, radius, animStartCurvePoint, animEndCurvePoint),
 
-                $valFlag = $('<div>').addClass('point-flag').html(value);
+                $valFlag = $('<div>').addClass('elroi-point-flag').html(value);
 
             graph.$el.find('.paper').append($valFlag);
 
@@ -1410,7 +1409,7 @@
                 }
             });
 
-            flags = graph.$el.find('.point-flag');
+            flags = graph.$el.find('.elroi-point-flag');
             flags.hide();
 
             selectedWedge = wedges[0];
@@ -1446,7 +1445,7 @@
      * @param series The series of data
      * @param {int} seriesIndex The index of the stacked bar data in the graph's allSeries array
      */
-    function stackedBars(graph, series, seriesIndex) {
+    function bars(graph, series, seriesIndex) {
 
         var barWidth = graph.barWidth + graph.options.bars.highlightBorderWidth;
 
@@ -1500,7 +1499,7 @@
 
                     if (series[i].pointFlag && (seriesCount == graph.allSeries[0].series.length)) {
                             var $pointFlag = series[i].pointFlag;
-                            $pointFlag.addClass('point-flag png-fix').appendTo(graph.$el.find('.paper'));
+                            $pointFlag.addClass('elroi-point-flag').appendTo(graph.$el.find('.paper'));
 
                             var pointFlagY;
                             if (graph.options.bars.flagPosition == 'interior' && $pointFlag.outerHeight() < totalBarHeights) {
@@ -1526,58 +1525,74 @@
          * @param {number} yTick The y-scale of the graph
          * @param {int} index The index of the x-label.  Used to draw the hover target area over one x-label for all series
          */
-        function barHover(series, yTick, index) {
+        function barHover(series, yTick, index, isStacked) {
 
             var total = 0,
                 clickTarget;
-
-            $(series).each(function(i) {
-
-                total += series[i][index].value;
-                if(series[i][index].clickTarget){
-                    clickTarget = series[i][index].clickTarget;
-                }
-            });
-            var barHeight = (total * yTick) + graph.options.bars.highlightBorderWidth;
-
+            if(isStacked) {
+                $(series).each(function(i) {
+                    total += series[i][index].value;
+                    if(series[i][index].clickTarget){
+                        clickTarget = series[i][index].clickTarget;
+                    }
+                });
+            } else {
+                var set = [];
+                $(series).each(function(i) {
+                    set.push(series[i][index].value);
+                });
+                total = Math.max.apply(Math, set);
+            }
+            var barHeight;
             var x = index * graph.xTick + graph.padding.left - (graph.options.bars.highlightBorderWidth/2) + (graph.barWhiteSpace/2);
-            var y = graph.height - barHeight - graph.padding.bottom + graph.padding.top + (graph.options.bars.highlightBorderWidth/2);
+            var y;
 
-            var rollOverBar = graph.paper
-                    .rect(x, y, barWidth, barHeight)
-                    .attr({
-                        'fill': 'white',
-                        'fill-opacity': 0.1,
-                        'stroke': graph.options.bars.highlightColor,
-                        'stroke-width': 4,
-                        'stroke-opacity': 0
-                    });
-            var rollOverTargetBar = graph.paper
-                    .rect(x, 0, barWidth, graph.height)
-                    .attr({
-                        'fill': 'white',
-                        'fill-opacity': 0,
-                        'stroke-width' : 0,
-                        'stroke' : 'transparent'
-                    });
+            var rolloverBars = graph.paper.set();
+            var rolloverX;
+            for(var i = 0; i < series.length; i++) {
 
+                barHeight = isStacked ? (total * yTick) + graph.options.bars.highlightBorderWidth :
+                    series[i][index].value * yTick + graph.options.bars.highlightBorderWidth;
+                y = graph.height - barHeight - graph.padding.bottom + graph.padding.top + (graph.options.bars.highlightBorderWidth/2);
+
+                rolloverX = isStacked ? x : x + barWidth * i;
+                var rollOverBar = graph.paper
+                        .rect(rolloverX, y, barWidth, barHeight)
+                        .attr({
+                            'fill': 'white',
+                            'fill-opacity': 0.1,
+                            'stroke': graph.options.bars.highlightColor,
+                            'stroke-width': 4,
+                            'stroke-opacity': 0
+                        });
+                rolloverBars.push(rollOverBar);
+                var targetBarWidth = isStacked ? barWidth : barWidth * series.length
+                var rollOverTargetBar = graph.paper
+                        .rect(x, 0, targetBarWidth, graph.height)
+                        .attr({
+                            'fill': 'white',
+                            'fill-opacity': 0,
+                            'stroke-width' : 0,
+                            'stroke' : 'none'
+                        });
+            }
+
+            var tallestBarHeight = isStacked ? barHeight : total * yTick + graph.options.bars.highlightBorderWidth;
             $(rollOverTargetBar.node).hover(
                 function() {
-
-                    rollOverBar.attr('stroke-opacity', graph.options.bars.highlightBorderOpacity);
+                    rolloverBars.attr('stroke-opacity', graph.options.bars.highlightBorderOpacity);
                     if (graph.options.tooltip.show) {
-
                         var tipX = x + barWidth / 2 - graph.options.tooltip.width / 2;
-                        var tipY = barHeight + graph.options.flagOffset + graph.options.bars.highlightBorderWidth;
+                        var tipY = tallestBarHeight + graph.options.flagOffset + graph.options.bars.highlightBorderWidth;
                         graph.$tooltip.stop().animate({bottom: tipY, left:tipX }, 1, function() {
                             var tipContent = graph.options.tooltip.formatter(graph.tooltips[index], graph.options.messages);
-                            graph.$tooltip.find('.tooltip-content').html(tipContent);
+                            graph.$tooltip.find('.elroi-tooltip-content').html(tipContent);
                         });
 
                     }
                 },
                 function() {
-                    rollOverBar.attr('stroke-opacity', 0);
+                    rolloverBars.attr('stroke-opacity', 0);
                 });
 
             $(rollOverTargetBar.node).click(function(){
@@ -1596,21 +1611,49 @@
                     }
                 );
             }
+
+        }
+
+        function drawBar(bar, barIndex, seriesIndex, yTick, color) {
+
+            var x = barIndex * graph.xTick + barWidth * seriesIndex + graph.padding.left + (graph.barWhiteSpace/2),
+                barHeight = bar.value * yTick,
+                y = graph.height - barHeight - graph.padding.bottom + graph.padding.top;
+
+            var bar = graph.paper.rect(x, graph.height-graph.padding.bottom+graph.padding.top, barWidth, 0).attr('fill', color).attr('stroke', color);
+
+            bar.animate({y:y, height: barHeight}, 550, function(){
+                $(graph.$el).trigger('barDrawn');
+            });
         }
 
         /**
          * Draws the stacked bars on the graph
          */
-        function drawStackedBars() {
-            var seriesSum = [],
-                 j = 0;
+        function drawBars() {
+            var isStacked = graph.allSeries[seriesIndex].options.type ==='stackedBar',
+                seriesSum = [],
+                color,
+                i=0,
+                j = 0;
 
-            for (j = 0; j < graph.numPoints; j++) {
-                seriesSum.push(0);
-            }
-            for (j = 0; j < series.length; j++) {
-                var color = graph.options.colors[j];
-                seriesSum = drawStackedBar(series[j], seriesSum, j+1, graph.yTicks[seriesIndex], color);
+            if(isStacked) {
+                for (j = 0; j < graph.numPoints; j++) {
+                    seriesSum.push(0);
+                }
+                for (j = 0; j < series.length; j++) {
+                    color = graph.options.colors[j];
+                    seriesSum = drawStackedBar(series[j], seriesSum, j+1, graph.yTicks[seriesIndex], color);
+                }
+            } else {
+                barWidth = barWidth/series.length;
+
+                for (i = 0; i < graph.numPoints; i++) {
+                    for(j=0; j < series.length; j++) {
+                        color = graph.options.colors[j];
+                        drawBar(series[j][i], i, j, graph.yTicks[seriesIndex], color);
+                    }
+                }
             }
 
             graph.$el.bind('barDrawn', function(){$('.point-flag').fadeIn();});
@@ -1618,11 +1661,10 @@
                 drawPointFlags(series[j], seriesSum, j+1, graph.yTicks[seriesIndex]);
             }
 
-            if (graph.tooltips && graph.tooltips.length)
-            {
+            if (graph.tooltips && graph.tooltips.length) {
                 for (j = 0; j < graph.numPoints; j++) {
                     if (graph.tooltips[j] || graph.tooltips[j] === 0) {
-                        barHover(series, graph.yTicks[seriesIndex], j);
+                        barHover(series, graph.yTicks[seriesIndex], j, isStacked);
                     }
                 }
             }
@@ -1630,10 +1672,11 @@
         }
 
         return {
-            draw : drawStackedBars
+            draw : drawBars
         };
     }
 
-    elroi.fn.stackedBar = stackedBars;
+    elroi.fn.stackedBar = bars;
+    elroi.fn.bar = bars;
 
 })(elroi, jQuery);

@@ -7,7 +7,7 @@ Development
 -----------
 There are two scripts to aid in developing elroi:
   bin/combine.sh -- Combines all of the elroi source files into a single elroi.js library.
-  bin/watch.rb   -- When invoked, this script listens for changes in the working directory
+  bin/watch.sh   -- When invoked, this script listens for changes in the working directory
                     and runs combine.sh to regenerate the elroi.js library.
 
                     The list of directories that watch.rb will listen to is defined in
