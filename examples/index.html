@@ -63,7 +63,43 @@
               .draw()
           </pre>
         </div>
-        
+
+        <div class="sample" id="line_small_points">
+            <h2>Line Graph With Small Points</h2>
+            <div class="graph"></div>
+          <pre>
+            elroi(
+              { $el:$('#line').find('.graph'),
+                data: [{series:testSeries, options: {type:'line', showPoints:true, pointStroke:false}}}]
+              })
+              .draw()
+          </pre>
+        </div>
+
+        <div class="sample" id="line_points">
+            <h2>Line Graph With Points</h2>
+            <div class="graph"></div>
+          <pre>
+            elroi(
+              { $el:$('#line_points').find('.graph'),
+                data: [{series:testSeries, options: {type:'line', showPoints:true}}]
+              })
+              .draw()
+          </pre>
+        </div>
+
+        <div class="sample" id="line_points_animated">
+            <h2>Line Graph With Points Animated</h2>
+            <div class="graph"></div>
+          <pre>
+            elroi(
+              { $el:$('#line_points_animated').find('.graph'),
+                data: [{series:testSeries, options: {type:'line', {type:'line', showPoints:true , animatePoints:true}}}}]
+              })
+              .draw()
+          </pre>
+        </div>
+
         <div class="sample" id="stacked-bar">
           <h2>Stacked Bar Graph</h2>
           <div class="graph"></div>

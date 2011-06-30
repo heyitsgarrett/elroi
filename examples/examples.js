@@ -38,6 +38,10 @@ $(document).ready(function(){
     };
     
     var line = elroi({$el:$('#line').find('.graph'), data: [{series:testSeries, options: {type:'line'}}]}).draw();
+    var line_small_points = elroi({$el:$('#line_small_points').find('.graph'), data: [{series:testSeries, options: {type:'line', showPoints:true, pointStroke:false}}]}).draw();
+    var line_points = elroi({$el:$('#line_points').find('.graph'), data: [{series:testSeries, options: {type:'line', showPoints:true}}]}).draw();
+    var line_points_animated = elroi({$el:$('#line_points_animated').find('.graph'), data: [{series:testSeries, options: {type:'line', showPoints:true , animatePoints:true}}]}).draw();
+
     var stackedBar = elroi(
         {
             $el:$('#stacked-bar').find('.graph'), 
