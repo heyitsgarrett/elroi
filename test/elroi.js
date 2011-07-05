@@ -248,9 +248,12 @@
           var $lineGraph = $('<div/>')
               .css({width: 900, height: 300})
               .appendTo($('#test')),
-          $barGraph = $('<div/>')
+          $stackedBarGraph = $('<div/>')
                .css({width: 900, height: 300})
                .appendTo($('#test')),
+          $barGraph = $('<div/>')
+              .css({width: 900, height: 300})
+              .appendTo($('#test')),
            testSeriesData = 
                         [
                             [
@@ -290,13 +293,19 @@
              options: { animation: false }
          }),
          sbg = elroi({
-              $el: $barGraph,
+              $el: $stackedBarGraph,
               data: [ { series: testSeriesData, options : { type: 'stackedBar'} }],
+              options: { animation: false }
+          }),
+          bg = elroi({
+              $el: $barGraph,
+              data: [ { series: testSeriesData, options : { type: 'bar'} }],
               options: { animation: false }
           });
 
          lg.draw();
          sbg.draw();
+         bg.draw();
 
      });
     
