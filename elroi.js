@@ -20,6 +20,7 @@
      */
     function e(args) {
         var defaults = {
+            animation: true,
             colors: ['#99cc33', '#ffee44', '#ffbb11', '#ee5500', '#33bbcc', '#88ddee'],
             labelDateFormat: 'M',
             errorMessage : false,
@@ -1496,15 +1497,23 @@
             $(series).each(function(i) {
 
                 if(series[i].value || series[i].value === 0 || series[i].pointFlag) {
-                    var x = i * graph.xTick + graph.padding.left + (graph.barWhiteSpace/2);
-                    var barHeight = series[i].value * yTick;
-                    var y = graph.height - barHeight - (seriesSum[i] * yTick) - graph.padding.bottom + graph.padding.top;
+                    var x = i * graph.xTick + graph.padding.left + (graph.barWhiteSpace/2),
+                        barHeight = series[i].value * yTick,
+                        y = graph.height - barHeight - (seriesSum[i] * yTick) - graph.padding.bottom + graph.padding.top,
+                        barStartHeight = graph.options.animation ? 0 : barHeight,
+                        barStartY = graph.height-graph.padding.bottom+graph.padding.top,
+                        bar;
+                    barStartY = graph.options.animation ? barStartY : y;
 
-                    var bar = graph.paper.rect(x, graph.height-graph.padding.bottom+graph.padding.top, barWidth, 0).attr('fill', color).attr('stroke', color);
+                    bar = graph.paper.rect(x, barStartY, barWidth, barStartHeight).attr('fill', color).attr('stroke', color);
 
-                    bar.animate({y:y, height: barHeight}, 550, function(){
+                    if(graph.options.animation){
+                        bar.animate({y:y, height: barHeight}, 550, function(){
+                            $(graph.$el).trigger('barDrawn');
+                        });
+                    } else {
                         $(graph.$el).trigger('barDrawn');
-                    });
+                    }
                 }
 
                 seriesSum[i] += series[i].value;
