@@ -1103,9 +1103,8 @@
                 }
             }
 
-            line.animate({
-                path: currentPath + pathString
-            }, animSpeed, function(){
+
+            function pointsAndLabels(){
                 if (!isNullPoint) {
                     if (seriesOptions.showPoints) {
                         drawPoint(
@@ -1122,7 +1121,28 @@
                         drawPointLabel(x, y, index, series[index].value, units, color);
                     }
                 }
+            }
 
+            if(graph.options.animation) {
+                line.animate({
+                    path: currentPath + pathString
+                }, animSpeed, function(){
+                    pointsAndLabels();
+                    drawLine({
+                        series:series,
+                        index:index + 1,
+                        line:line,
+                        prevPoint:thisPoint,
+                        isLineFilled:isLineFilled,
+                        color:color,
+                        isLineStarted:isLineStarted,
+                        currentPath:currentPath + pathString,
+                        units:units
+                        });
+                });
+            } else {
+                line.attr('path', currentPath + pathString);
+                pointsAndLabels();
                 drawLine({
                     series:series,
                     index:index + 1,
@@ -1134,7 +1154,7 @@
                     currentPath:currentPath + pathString,
                     units:units
                     });
-            });
+            }
 
         }
 
