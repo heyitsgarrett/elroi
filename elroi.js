@@ -1686,7 +1686,7 @@
             barStartY = graph.options.animation ? barStartY : y;
 
             bar = graph.paper.rect(x, barStartY, barWidth, barStartHeight).attr('fill', color).attr('stroke', color);
-            if(graph.options.animate){
+            if(graph.options.animation){
                 bar.animate({y:y, height: barHeight}, 550, function(){
                     $(graph.$el).trigger('barDrawn');
                 });
