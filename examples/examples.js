@@ -6,7 +6,7 @@ $(document).ready(function(){
             {value: 689, endDate: "2009-06-01T03:59:59.000Z"},
             {value: 708, endDate: "2009-07-01T03:59:59.000Z"},
             {value: 680, endDate: "2009-08-01T03:59:59.000Z"},
-            {value: 690, endDate: "2009-09-01T03:59:59.000Z"},
+            {value: 540, endDate: "2009-09-01T03:59:59.000Z"},
             {value: 682, endDate: "2009-10-01T03:59:59.000Z"},
             {value: 685, endDate: "2009-11-01T03:59:59.000Z"},
             {value: 707, endDate: "2009-12-01T04:59:59.000Z"},
@@ -38,6 +38,7 @@ $(document).ready(function(){
     };
     
     var line = elroi({$el:$('#line').find('.graph'), data: [{series:testSeries, options: {type:'line'}}]}).draw();
+    var line = elroi({$el:$('#step').find('.graph'), data: [{series:testSeries, options: {type:'step'}}]}).draw();
     var line_small_points = elroi({$el:$('#line_small_points').find('.graph'), data: [{series:testSeries, options: {type:'line', showPoints:true, pointStroke:false}}]}).draw();
     var line_points = elroi({$el:$('#line_points').find('.graph'), data: [{series:testSeries, options: {type:'line', showPoints:true}}]}).draw();
     var line_points_animated = elroi({$el:$('#line_points_animated').find('.graph'), data: [{series:testSeries, options: {type:'line', showPoints:true , animatePoints:true}}]}).draw();

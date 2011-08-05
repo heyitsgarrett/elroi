@@ -70,7 +70,10 @@
           <pre>
             elroi(
               { $el:$('#line').find('.graph'),
-                data: [{series:testSeries, options: {type:'line', showPoints:true, pointStroke:false}}}]
+                data: [
+                  {series:testSeries, 
+                    options: {type:'line', showPoints:true, pointStroke:false}}}
+                ]
               })
               .draw()
           </pre>
@@ -94,7 +97,30 @@
           <pre>
             elroi(
               { $el:$('#line_points_animated').find('.graph'),
-                data: [{series:testSeries, options: {type:'line', {type:'line', showPoints:true , animatePoints:true}}}}]
+                data: [
+                  { series:testSeries, 
+                    options: {
+                      type:'line', 
+                      { type:'line', 
+                        showPoints:true , 
+                        animatePoints:true
+                      }
+                      }
+                    }
+                  }
+                ]
+              })
+              .draw()
+          </pre>
+        </div>
+        
+        <div class="sample" id="step">
+          <h2>Step Graph</h2>
+          <div class="graph"></div>
+          <pre>
+            elroi(
+              { $el:$('#step').find('.graph'), 
+                data: [{series:testSeries, options: {type:'step'}}]
               })
               .draw()
           </pre>

@@ -1054,12 +1054,14 @@
                 animSpeed = (window.isIE6 ? 1 : 800)/series.length,
                 isFirstPoint = !index;
 
-            if(!prevPoint && !seriesOptions.interpolateNulls) {
+            if(!prevPoint && !(seriesOptions.interpolateNulls || seriesOptions.type === 'step')) {
                 isLineStarted = false;
             }
 
             if (!isFirstPoint && isLineStarted && !isNullPoint) {
-                pathString = "L" + x + " " + y;
+                pathString = seriesOptions.type === 'step' ?
+                    "L" + x + " " + prevPoint.y + "L" + x + " " + y  :
+                    "L" + x + " " + y;
             } else if (isNullPoint && !isFirstPoint){
                 pathString = "";
             }
@@ -1073,7 +1075,7 @@
             }
 
             var thisPoint;
-            if(seriesOptions.interpolateNulls) {
+            if(seriesOptions.interpolateNulls || seriesOptions.type === 'step') {
                 thisPoint = isNullPoint ? prevPoint : {x:x, y:y};
             } else {
                 thisPoint = isNullPoint ? null : {x:x, y:y};
@@ -1262,6 +1264,7 @@
     }
 
     elroi.fn.line = lines;
+    elroi.fn.step = lines;
 
 })(elroi);
 (function(elroi, $) {
