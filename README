@@ -1,6 +1,8 @@
 Elroi is a graphing library built for Opower's Astro web application
 
-It is based on the Raphael JavaScript graphing library.
+It is based on the Raphael JavaScript graphing library, meaning that every element
+in the chart is essentially an HTML element. This has powerful implications,
+since you can augment everything elroi does with straight HTML, CSS, and JavaScript.
 
 Usage
 -----
