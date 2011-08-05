@@ -2,6 +2,14 @@ Elroi is a graphing library built for Opower's Astro web application
 
 It is based on the Raphael JavaScript graphing library.
 
+Usage
+-----
+
+For usage examples, see
+
+  examples/index.html
+  examples/examples.js
+
 
 Development
 -----------
@@ -28,10 +36,3 @@ Tests are written in QUnit. To run the tests, open this in any browser:
 
   test/index.html
 
-Usage
------
-
-For usage examples, see
-
-  examples/index.html
-  examples/examples.js
