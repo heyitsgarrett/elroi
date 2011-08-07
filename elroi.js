@@ -1408,13 +1408,17 @@
         function selectWedge(wedge) {
 
             var rotationAngle = wedge.startAngle - Math.abs((wedge.endAngle - wedge.startAngle)/2),
-                flagCoords = {};
+                flagCoords = {},
+				selectedFlagOffset = wedge.flag.$el.width()/2,
+				selectedFlagCoords = {};
 
             $(wedges).each(function(i){
                 flagCoords = getFlagCoords(this.flag.$el, wedges[i].startAngle + (wedges[i].endAngle - wedges[i].startAngle)/2 - rotationAngle);
                 flags.fadeOut(40);
                 wedges[i].flag.$el.css({left: flagCoords.x, top: flagCoords.y });
             });
+
+
 
             selectedWedge.rObj.animate(
                 {
@@ -1431,6 +1435,7 @@
                         function(){
 
                             flags.fadeIn();
+							wedge.flag.$el.css('left', wedge.flag.$el.position().left + selectedFlagOffset + FLAGMARGIN);
 
                             wedge.rObj.animate({
                                 path: wedge.animPath
