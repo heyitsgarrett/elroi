@@ -90,20 +90,20 @@
     });
     
     Q.test('elroi date formatter', function(){
-        Q.equal(elroi.fn.formatDate('D', new Date('2011-06-01')), "Wed", 'Short day names');
-        Q.equal(elroi.fn.formatDate('DD', new Date('2011-06-02')), "Thursday", 'Long day names');
-        Q.equal(elroi.fn.formatDate('M', new Date('2011-06-01')), "Jun", 'Short month names');
-        Q.equal(elroi.fn.formatDate('MM', new Date('2011-08-02')), "August", 'Long month names');
-        Q.equal(elroi.fn.formatDate('d', new Date('2011-06-01')), "1", 'Single digit day');
-        Q.equal(elroi.fn.formatDate('dd', new Date('2011-08-02')), "02", 'Double digit day');
-        Q.equal(elroi.fn.formatDate('m', new Date('2011-04-01')), "4", 'Single digit month');
-        Q.equal(elroi.fn.formatDate('mm', new Date('2011-03-02')), "03", 'Double digit month');
-        Q.equal(elroi.fn.formatDate('y', new Date('2001-04-01')), "01", 'Double digit year');
-        Q.equal(elroi.fn.formatDate('yy', new Date('2011-03-02')), "2011", 'Full year');
-        Q.equal(elroi.fn.formatDate('h a', new Date('2011-03-02 13:00')), "1 pm", 'Single digit time with pm');
-        Q.equal(elroi.fn.formatDate('hh a', new Date('2011-03-02 01:00')), "01 am", 'Double digit time with am');
-        Q.equal(elroi.fn.formatDate('H:n', new Date('2011-03-02 01:09')), "1:09", 'Single digit military time');
-        Q.equal(elroi.fn.formatDate('HH:n', new Date('2011-03-02 13:47')), "13:47", 'Double digit military time');
+        Q.equal(elroi.fn.formatDate('D', new Date('2011 06 01')), "Wed", 'Short day names');
+        Q.equal(elroi.fn.formatDate('DD', new Date('2011 06 02')), "Thursday", 'Long day names');
+        Q.equal(elroi.fn.formatDate('M', new Date('2011 06 01')), "Jun", 'Short month names');
+        Q.equal(elroi.fn.formatDate('MM', new Date('2011 08 02')), "August", 'Long month names');
+        Q.equal(elroi.fn.formatDate('d', new Date('2011 06 01')), "1", 'Single digit day');
+        Q.equal(elroi.fn.formatDate('dd', new Date('2011 08 02')), "02", 'Double digit day');
+        Q.equal(elroi.fn.formatDate('m', new Date('2011 04 01')), "4", 'Single digit month');
+        Q.equal(elroi.fn.formatDate('mm', new Date('2011 03 02')), "03", 'Double digit month');
+        Q.equal(elroi.fn.formatDate('y', new Date('2001 04 01')), "01", 'Double digit year');
+        Q.equal(elroi.fn.formatDate('yy', new Date('2011 03 02')), "2011", 'Full year');
+        Q.equal(elroi.fn.formatDate('h a', new Date('2011 03 02 13:00')), "1 pm", 'Single digit time with pm');
+        Q.equal(elroi.fn.formatDate('hh a', new Date('2011 03 02 01:00')), "01 am", 'Double digit time with am');
+        Q.equal(elroi.fn.formatDate('H:n', new Date('2011 03 02 01:09')), "1:09", 'Single digit military time');
+        Q.equal(elroi.fn.formatDate('HH:n', new Date('2011 03 02 13:47')), "13:47", 'Double digit military time');
     });
 
     /*
