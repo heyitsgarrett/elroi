@@ -1,16 +1,66 @@
 Elroi is a graphing library built for Opower's Astro web application
 
-It is based on the Raphael JavaScript graphing library, meaning that every element
+It is based on the Raphael JavaScript library, meaning that every element
 in the chart is essentially an HTML element. This has powerful implications,
 since you can augment everything elroi does with straight HTML, CSS, and JavaScript.
 
 Usage
 -----
 
-For usage examples, see
+Elroi requires jQuery (http://jquery.com) and RaphaelJS (http://http://raphaeljs.com/).  To use elroi,
+include jQuery, Raphael, elroi.js, and elroi.css.  You can create and draw a graph with:
+
+var myGraph = elroi({$el: $element, data: dataSeries, options:graphOptions});
+myGraph.draw();
+
+$el - a jQuery object for the HMTL element that will contain the graph.  The height and width of the graph elroi creates are determined
+by your styles on $el.
+
+  example: var $element = $('#my-graph-container');
+
+data - The data to graph.  An array of data objects and their optional series-specific options.  
+  Each data object contains a series array, which contains arrays of series data points.
+  Each data object can also take an optional series specific options property.
+  
+  example:
+  
+  var dataSeries = [
+    {
+      series:[
+              [
+                {value: 183, endDate: "2009-05-01T03:59:59.000Z"},
+                {value: 289, endDate: "2009-06-01T03:59:59.000Z"},
+                {value: 108, endDate: "2009-07-01T03:59:59.000Z"}
+              ],
+              [
+                {value: 683, endDate: "2009-05-01T03:59:59.000Z"},
+                {value: 789, endDate: "2009-06-01T03:59:59.000Z"},
+                {value: 408, endDate: "2009-07-01T03:59:59.000Z"}
+              ],
+            ]
+      options:  {type:'bar', showPoints:true , animatePoints:true}
+    }
+  ];
+
+options - An object to configure graph-wide options.  This is where you can set colors, axes, tooltips, animation, and other things.
+ example: 
+    var graphOptions = {
+         axes: {
+             y1: {
+                 show: false
+             }
+             y2: {
+                 show: true,
+                 seriesIndex: 0
+             }
+         }
+     };
+
+For a ton of usage examples, see
 
   examples/index.html
   examples/examples.js
+
 
 
 Development

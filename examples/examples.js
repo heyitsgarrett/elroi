@@ -110,4 +110,5 @@ $(document).ready(function(){
         }
     },
     tooltips: tooltips}).draw();
+
 });
