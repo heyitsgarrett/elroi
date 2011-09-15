@@ -77,13 +77,13 @@
   font-size: 14px;
 }
 
-.elroi .point-label {
+.elroi .elroi-point-label {
   font-weight: bold;
   white-space: nowrap;
 }
 
 /* Point flags */
-.elroi .elroi-point-flag {
+.elroi .elroi-point-flag, .elroi .elroi-point-label{
   position: absolute;
   text-align: center;
   font-size: 12px;
