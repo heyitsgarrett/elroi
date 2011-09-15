@@ -139,29 +139,57 @@
           </pre>
         </div>
         
-             <div class="sample" id="bar">
-               <h2>Bar Graph</h2>
-               <div class="graph"></div>
-               <pre>
-                 elroi(
-                   { $el:$('#bar').find('.graph'), 
-                     data: [{series:testSeries, options: {type:'bar'}}]
-                   })
-                   .draw();
-                 
-               </pre>
-             </div>
+        <div class="sample" id="bar">
+           <h2>Bar Graph</h2>
+           <div class="graph"></div>
+           <pre>
+             elroi(
+               { $el:$('#bar').find('.graph'), 
+                 data: [{series:testSeries, options: {type:'bar'}}]
+               })
+               .draw();
              
-             <div class="sample" id="pie">
-               <h2>Pie Chart</h2>
-               <div class="graph"></div>
-               <pre>
-                 elroi(
-                   { $el:$('#pie').find('.graph'), 
-                     data: [{series:testSeries, options: {type:'pie'}}]
-                   })
-                   .draw();
-               </pre>
-             </div>
+           </pre>
+        </div>
+
+        <div class="sample" id="pie">
+            <h2>Pie Chart</h2>
+            <div class="graph"></div>
+            <pre>
+              elroi(
+                { $el:$('#pie').find('.graph'), 
+                  data: [{series:testSeries, options: {type:'pie'}}]
+                })
+                .draw();
+            </pre>
+        </div>
+         
+        <div class="sample" id="multi_series_multi_axis">
+            <h2>Multiple Series with Multiple Axes</h2>
+            <div class="graph"></div>
+            <pre>
+              elroi({
+                    $el:$('#multi_series_multi_axis').find('.graph'), 
+                    data: [{
+                            series:testSeries, options: {
+                              type:'bar', showPoints:true , animatePoints:true
+                            }
+                        }, {
+                            series:testSeries2, options: {
+                              type:'line', showPoints:true , animatePoints:true
+                            }
+                        }
+                    ],
+                    options: {
+                        axes: {
+                            y2: {
+                                show: true,
+                                seriesIndex: 1
+                            }
+                        }
+                    }
+                }).draw();
+            </pre>
+        </div>
     </body>
 </html>
