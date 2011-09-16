@@ -88,3 +88,10 @@ Tests are written in QUnit. To run the tests, open this in any browser:
 
   test/index.html
 
+
+
+
+  License
+  -----
+  Distributes under the Apache License, see LICENSE.txt
+
