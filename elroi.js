@@ -67,7 +67,7 @@
                 }
             },
             tooltip: {
-                formatter : function(){},
+                formatter : function(tip){return tip},
                 show: true,
                 width: 120
             },
@@ -524,6 +524,22 @@
             });
 
             return seriesOptions;
+        },
+
+        buildDefaultTooltips : function(allSeries) {
+            var tooltips = [];
+            $(allSeries).each(function(i) {
+                $(this.series).each(function(j){
+                    $(this).each(function(k){
+                        if(tooltips[k]) {
+                            tooltips[k] += "<br/>" + this.value;
+                        } else {
+                            tooltips[k] = "" + this.value;
+                        }
+                    });
+                });
+            });
+            return tooltips;
         }
     };
 
@@ -593,6 +609,10 @@
             barWidth: barWidth,
             barWhiteSpace: barWhiteSpace
         });
+
+        if(graph.options.tooltip.show && graph.tooltips === undefined) {
+            graph.tooltips = elroi.fn.helpers.buildDefaultTooltips(graph.allSeries);
+        }
 
         return graph;
     }
