@@ -140,6 +140,59 @@
         Q.equal(elroi.fn.formatDate('H:n', new Date('2011/03/02 01:09')), "1:09", 'Single digit military time');
         Q.equal(elroi.fn.formatDate('HH:n', new Date('2011/03/02 13:47')), "13:47", 'Double digit military time');
     });
+    
+    Q.test('elroi date range determiner', function(){
+       var subDaily = 
+        [ 
+            {
+                series: 
+                    [
+                        [
+                            {value:1, date: "2009-05-01T03:59:59.000Z"}, {value: 2, date:"2009-05-01T04:59:59.000Z"}
+                        ]
+                    ]
+            }
+        ];
+       var monthlyGaps = 
+        [ 
+            {
+                series: 
+                    [
+                        [
+                            {value:1, date: "2009-05-01T03:59:59.000Z"}, {value: 2, date:"2009-06-01T03:59:59.000Z"}
+                        ]
+                    ]
+            }
+        ];
+        var withinAMonth = 
+         [ 
+             {
+                 series: 
+                     [
+                         [
+                             {value:1, date: "2009-05-01T03:59:59.000Z"}, {value: 2, date:"2009-05-04T03:59:59.000Z"}
+                         ]
+                     ]
+             }
+         ];
+         var multiYear = 
+          [ 
+              {
+                  series: 
+                      [
+                          [
+                              {value:1, date: "2009-05-01T03:59:59.000Z"}, {value: 2, date:"2010-05-01T03:59:59.000Z"}
+                          ]
+                      ]
+              }
+          ];
+
+
+         Q.equal(elroi.fn.helpers.determineDateFormat(subDaily), "hh:nn", "Under a day should get timestamps");
+         Q.equal(elroi.fn.helpers.determineDateFormat(monthlyGaps), "M", "Dates a month apart should give monthly formats");      
+         Q.equal(elroi.fn.helpers.determineDateFormat(withinAMonth), "d/m", "Dates within the same month should get day/month");
+         Q.equal(elroi.fn.helpers.determineDateFormat(multiYear), "YY", "Year spanners should use the year");
+    });
 
     /*
      * This is the start of a series of visual tests for seeing elroi render in various ways.
