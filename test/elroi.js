@@ -89,6 +89,14 @@
 
     });
     
+    Q.test('elroi accepts simple arrays for data', function() {
+        var simpleData = [1,2,3,4,5,6,7];
+        var expectedFormattedData = [{series: [[{value: 1},{value: 2},{value: 3},{value: 4},{value: 5},{value: 6},{value: 7}]]}];
+        var formattedData = elroi.fn.helpers.dataCleaner(simpleData);
+        Q.deepEqual(formattedData, expectedFormattedData, 'Simple array is correctly reformmated');
+       
+    });
+    
     Q.test('default tooltips', function(){
         var expectedTooltips = ['45<br/>56', '57<br/>78'];
         var testSeries = [{
@@ -260,6 +268,9 @@
               $barGraph = $('<div/>')
                   .css({width: 900, height: 300})
                   .appendTo($('#test')),
+              $easyLineGraph =     $('<div/>')
+                        .css({width: 900, height: 300})
+                        .appendTo($('#test')),
                testSeriesData = 
                             [
                                 [
@@ -308,6 +319,7 @@
                   [ { series: testSeriesData, options : { type: 'bar'} }],
                   { animation: false }
               );
+              elg = elroi($easyLineGraph, [1,3,7,8,9,2,10]);
          
          });
     

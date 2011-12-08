@@ -541,8 +541,25 @@
                 });
             });
             return tooltips;
+        },
+
+        dataCleaner : function(allSeries) {
+            var cleanData = [];
+
+            if(typeof(allSeries[0]) == "number") {
+                var temp = { series: [[]]};
+                for(var i=0; i<allSeries.length; i++) {
+                    temp.series[0].push({value: allSeries[i]});
+                }
+                cleanData.push(temp);
+            } else {
+                cleanData = allSeries;
+            }
+
+            return cleanData;
         }
     };
+
 
     /**
      * Goes over the data series passed in, and sets things up for use by other elroi functions.
@@ -561,12 +578,23 @@
      */
     function init(graph) {
 
-        var seriesOptions = elroi.fn.helpers.seriesOptions(graph.allSeries, graph.options.seriesDefaults),
-            maxVals = [],
-            minVals = [],
-            dataValuesSet = elroi.fn.helpers.getDataValues(graph.allSeries, seriesOptions),
-            sums = elroi.fn.helpers.sumSeries(dataValuesSet),
-            hasData = elroi.fn.helpers.hasData(graph.allSeries);
+        var seriesOptions,
+            maxVals,
+            minVals,
+            dataValuesSet,
+            sums,
+            hasData;
+
+        graph.allSeries = elroi.fn.helpers.dataCleaner(graph.allSeries);
+
+        console.log(graph.allSeries);
+
+        seriesOptions = elroi.fn.helpers.seriesOptions(graph.allSeries, graph.options.seriesDefaults);
+        maxVals = [];
+        minVals = [];
+        dataValuesSet = elroi.fn.helpers.getDataValues(graph.allSeries, seriesOptions);
+        sums = elroi.fn.helpers.sumSeries(dataValuesSet);
+        hasData = elroi.fn.helpers.hasData(graph.allSeries)
 
         var numPoints = !hasData ? 1 : graph.allSeries[0].series[0].length;
 
