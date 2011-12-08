@@ -1,6 +1,6 @@
 (function($) {
 
-    var elroi = function(args) { if (args) { return new e(args); } };
+    var elroi = function(element, dataSeries, graphOptions, tooltips) { return new e(element, dataSeries, graphOptions, tooltips); };
 
     elroi.fn = {};
 
@@ -18,7 +18,7 @@
      * @return {function} draw Method to draw the graph
      * @return {function} update Updates the graph with new data
      */
-    function e(args) {
+    function e(element, dataSeries, graphOptions, tooltips) {
         var defaults = {
             animation: true,
             colors: ['#99cc33', '#ffee44', '#ffbb11', '#ee5500', '#33bbcc', '#88ddee'],
@@ -103,12 +103,12 @@
             padding: {top:15, right:20, bottom:18, left:50}
         };
 
-        var $el = $(args.$el)
+        var $el = $(element)
                     .addClass('elroi'),
             $paper = $('<div></div>')
                         .addClass('paper')
                         .appendTo($el),
-            options = $.extend(true, {}, defaults, args.options);
+            options = $.extend(true, {}, defaults, graphOptions);
 
         var width = $paper.width() || $el.width(),
             height = $paper.height() || $el.height();
@@ -118,12 +118,11 @@
             labelLineHeight: 12,
             width: width,
             height: height,
-            allSeries: args.data,
+            allSeries: dataSeries,
             $el: $el,
             paper: Raphael($paper.get(0), width, height),
-            argGraphOpts: options,
             options: options,
-            tooltips: args.tooltips
+            tooltips: tooltips
         });
 
         var html = '<div class="elroi-tooltip"><div class="elroi-tooltip-content"></div></div>';
@@ -187,6 +186,8 @@
 
            draw();
         }
+
+        draw();
 
         return {
             graph: graph,
@@ -540,8 +541,46 @@
                 });
             });
             return tooltips;
+        },
+
+        dataCleaner : function(allSeries) {
+            var cleanData = [],
+                temp,
+                i;
+
+            if(typeof(allSeries[0]) == "number") {
+                temp = { series: [[]]};
+                for(i=0; i<allSeries.length; i++) {
+                    temp.series[0].push({value: allSeries[i]});
+                }
+                cleanData.push(temp);
+            } else {
+                if(!(allSeries instanceof Array)) {
+                    if(!(allSeries.series[0] instanceof Array)) {
+                        temp = { series: [], options: {}};
+                        temp.series.push(allSeries.series);
+                        temp.options = allSeries.options || {};
+                        cleanData.push(temp);
+                    } else {
+                        cleanData = allSeries;
+                    }
+                } else if (!(allSeries[0] instanceof Array)){
+                    if(allSeries[0].series === undefined) {
+                        temp = { series: [] };
+                        temp.series.push(allSeries);
+                        cleanData.push(temp);
+                    } else {
+                        cleanData = allSeries;
+                    }
+                } else {
+                    cleanData = allSeries;
+                }
+            }
+
+            return cleanData;
         }
     };
+
 
     /**
      * Goes over the data series passed in, and sets things up for use by other elroi functions.
@@ -560,12 +599,21 @@
      */
     function init(graph) {
 
-        var seriesOptions = elroi.fn.helpers.seriesOptions(graph.allSeries, graph.options.seriesDefaults),
-            maxVals = [],
-            minVals = [],
-            dataValuesSet = elroi.fn.helpers.getDataValues(graph.allSeries, seriesOptions),
-            sums = elroi.fn.helpers.sumSeries(dataValuesSet),
-            hasData = elroi.fn.helpers.hasData(graph.allSeries);
+        var seriesOptions,
+            maxVals,
+            minVals,
+            dataValuesSet,
+            sums,
+            hasData;
+
+        graph.allSeries = elroi.fn.helpers.dataCleaner(graph.allSeries);
+
+        seriesOptions = elroi.fn.helpers.seriesOptions(graph.allSeries, graph.options.seriesDefaults);
+        maxVals = [];
+        minVals = [];
+        dataValuesSet = elroi.fn.helpers.getDataValues(graph.allSeries, seriesOptions);
+        sums = elroi.fn.helpers.sumSeries(dataValuesSet);
+        hasData = elroi.fn.helpers.hasData(graph.allSeries)
 
         var numPoints = !hasData ? 1 : graph.allSeries[0].series[0].length;
 
@@ -652,11 +700,11 @@
                     startDate = new Date(this.startDate);
                 }
 
-                if (this.endDate) {
-                    endDate = new Date(this.endDate);
+                if (this.endDate || this.date) {
+                    endDate = this.endDate ? new Date(this.endDate) : this.date;
                 }
 
-                if (this.startDate && this.endDate) {
+                if (startDate && endDate) {
                     if (startDate.getMonth() == endDate.getMonth()) {
                         endDateFormat = endDateFormat.replace('M', '' && startDateFormat.match('M'));
                     }
@@ -665,13 +713,13 @@
                     }
                 }
 
-                if (this.startDate) {
+                if (startDate) {
                     label += elroi.fn.formatDate(startDateFormat, startDate);
                 }
-                if(this.startDate && this.endDate) {
+                if(startDate && endDate) {
                     label += " &ndash;";
                 }
-                if(this.endDate) {
+                if(endDate) {
                     label += elroi.fn.formatDate(endDateFormat, endDate);
                     label = label.replace(/\s/g, '&nbsp;');
                 }

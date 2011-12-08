@@ -89,6 +89,30 @@
 
     });
     
+    Q.test('elroi accepts simple arrays for data', function() {
+        var simpleData = [1,2,3,4,5,6,7];
+        var expectedFormattedData = [{series: [[{value: 1},{value: 2},{value: 3},{value: 4},{value: 5},{value: 6},{value: 7}]]}];
+        var formattedData = elroi.fn.helpers.dataCleaner(simpleData);
+        Q.deepEqual(formattedData, expectedFormattedData, 'Simple array is correctly reformmated');
+       
+    });
+    
+    Q.test('elroi accepts a single series for data', function() {
+        var singleSeries = [ {value: 1}, {value: 2}, {value: 3}, {value: 4}, {value: 5}, {value: 6}, {value: 7}];
+        var expectedFormattedData = [{series: [[{value: 1},{value: 2},{value: 3},{value: 4},{value: 5},{value: 6},{value: 7}]]}];
+        var formattedData = elroi.fn.helpers.dataCleaner(singleSeries);
+        Q.deepEqual(formattedData, expectedFormattedData, 'Single series is correctly reformmated');
+       
+    });
+    
+    Q.test('elroi accepts a single series with options for data', function() {
+        var singleSeries = { series: [ {value: 1}, {value: 2}, {value: 3}, {value: 4}, {value: 5}, {value: 6}, {value: 7}], options: {type: 'bar'}};
+        var expectedFormattedData = [{series: [[{value: 1},{value: 2},{value: 3},{value: 4},{value: 5},{value: 6},{value: 7}]], options: {type: 'bar'}}];
+        var formattedData = elroi.fn.helpers.dataCleaner(singleSeries);
+        Q.deepEqual(formattedData, expectedFormattedData, 'Single series with options is correctly reformmated');
+       
+    });
+    
     Q.test('default tooltips', function(){
         var expectedTooltips = ['45<br/>56', '57<br/>78'];
         var testSeries = [{
@@ -134,9 +158,8 @@
                              .appendTo($('#test'));
          
          
-             var e = elroi({
-                 $el: $graph,
-                 data:
+             var e = elroi(
+                 $graph,
                  [
                          {
                              series:
@@ -167,7 +190,6 @@
                              }
                          }
                  ],
-                 options:
                  {
                      tooltip:
                      {
@@ -228,7 +250,6 @@
                      labelDateFormat: "M",
                      errorMessage: false
                  },
-                 tooltips:
                  [
                      {
                          dateRange:  "Apr 1 &ndash; Apr 30",
@@ -249,9 +270,7 @@
                      {dateRange: "Feb 1 &ndash; Feb 28",you: 748,unit: "kWh",drillLink: "/ei/app/myEnergyUse/usage/bill/2010/2?meterType=ELEC",drillMessage: "View each day"},
                      {dateRange: "Mar 1 &ndash; Mar 31",you: 748,unit: "kWh",drillLink: "/ei/app/myEnergyUse/usage/bill/2010/3?meterType=ELEC",drillMessage: "View each day"}
                  ]
-             });
-         
-             e.draw();
+             );
          
          });
          
@@ -265,6 +284,16 @@
               $barGraph = $('<div/>')
                   .css({width: 900, height: 300})
                   .appendTo($('#test')),
+              $easyLineGraph = $('<div/>')
+                        .css({width: 900, height: 300})
+                        .appendTo($('#test')),
+
+              $singleSeriesLineGraph = $('<div/>')
+                            .css({width: 900, height: 300})
+                            .appendTo($('#test')),
+              $singleSeriesBarGraph = $('<div/>')
+                  .css({width: 900, height: 300})
+                  .appendTo($('#test')),                            
                testSeriesData = 
                             [
                                 [
@@ -298,26 +327,32 @@
                             ];
          
          
-             var lg = elroi({
-                 $el: $lineGraph,
-                 data: [ { series: testSeriesData, options : { type: 'line'} }],
-                 options: { animation: false }
-             }),
-             sbg = elroi({
-                  $el: $stackedBarGraph,
-                  data: [ { series: testSeriesData, options : { type: 'stackedBar'} }],
-                  options: { animation: false }
-              }),
-              bg = elroi({
-                  $el: $barGraph,
-                  data: [ { series: testSeriesData, options : { type: 'bar'} }],
-                  options: { animation: false }
-              });
-         
-             lg.draw();
-             sbg.draw();
-             bg.draw();
-         
+             var lg = elroi(
+                 $lineGraph,
+                 [ { series: testSeriesData, options : { type: 'line'} }],
+                 { animation: false }
+             ),
+             sbg = elroi(
+                  $stackedBarGraph,
+                  [ { series: testSeriesData, options : { type: 'stackedBar'} }],
+                  { animation: false }
+              ),
+              bg = elroi(
+                  $barGraph,
+                  [ { series: testSeriesData, options : { type: 'bar'} }],
+                  { animation: false }
+              );
+              elg = elroi($easyLineGraph, [1,3,7,8,9,2,10]);
+              sslg = elroi($singleSeriesLineGraph, 
+                  [{value: 1, endDate: "2009-05-01T03:59:59.000Z"}, 
+                        {value: 2, date: "2009-06-01T03:59:59.000Z"}, 
+                        {value: 3, date: "2009-07-01T03:59:59.000Z"}, 
+                        {value: 4, date: "2009-08-01T03:59:59.000Z"}, 
+                        {value: 5, date: "2009-09-01T03:59:59.000Z"}, 
+                        {value: 6, date: "2009-10-01T03:59:59.000Z"}, 
+                        {value: 7, date: "2009-11-01T03:59:59.000Z"}]
+              );
+              ssbg = elroi($singleSeriesBarGraph, { series: [ {value: 1}, {value: 2}, {value: 3}, {value: 4}, {value: 5}, {value: 6}, {value: 7}], options: {type: 'bar'}});      
          });
     
     

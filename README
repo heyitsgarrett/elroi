@@ -10,19 +10,67 @@ Usage
 Elroi requires jQuery (http://jquery.com) and RaphaelJS (http://http://raphaeljs.com/).  To use elroi,
 include jQuery, Raphael, elroi.js, and elroi.css.  You can create and draw a graph with:
 
-var myGraph = elroi({$el: $element, data: dataSeries, options:graphOptions});
-myGraph.draw();
+var myGraph = elroi($element, dataSeries, [graphOptions], [tooltips]);
 
-$el - a jQuery object for the HMTL element that will contain the graph.  The height and width of the graph elroi creates are determined
-by your styles on $el.
+$element - a jQuery object for the HMTL element that will contain the graph.  The height and width of the graph elroi creates are determined
+by your styles on $element.
 
   example: var $element = $('#my-graph-container');
 
-data - The data to graph.  An array of data objects and their optional series-specific options.  
+data - The data to graph.  Elroi will accept a variety of formats for this.
+  
+  An array.
+    dataSeries = [4,6,8,4,3,9];
+    
+  An array of values and dates
+    dataSeries = [
+                    {value: 4, date: "2009-05-01T03:59:59.000Z"}, 
+                    {value: 8, date: "2009-05-02T03:59:59.000Z"}, 
+                    {value: 14, date: "2009-05-03T03:59:59.000Z"}, 
+                    {value: 6, date: "2009-05-04T03:59:59.000Z"}, 
+                    {value: 9, date: "2009-05-05T03:59:59.000Z"}
+                 ];
+    
+  An object with a data series, and an optional series-specific graph option:
+    dataSeries = {
+           series: [
+                    {value: 4, date: "2009-05-01T03:59:59.000Z"}, 
+                    {value: 8, date: "2009-05-02T03:59:59.000Z"}, 
+                    {value: 14, date: "2009-05-03T03:59:59.000Z"}, 
+                    {value: 6, date: "2009-05-04T03:59:59.000Z"}, 
+                    {value: 9, date: "2009-05-05T03:59:59.000Z"}
+                 ],
+            options : { type: 'bar'}
+    
+    };
+    
+  An object with multiple arrays of series:
+    dataSeries = {
+           series: [
+                    [
+                      {value: 4, date: "2009-05-01T03:59:59.000Z"}, 
+                      {value: 8, date: "2009-05-02T03:59:59.000Z"}, 
+                      {value: 14, date: "2009-05-03T03:59:59.000Z"}, 
+                      {value: 6, date: "2009-05-04T03:59:59.000Z"}, 
+                      {value: 9, date: "2009-05-05T03:59:59.000Z"}
+                    ],
+                    [
+                      {value: 54, date: "2009-05-01T03:59:59.000Z"}, 
+                      {value: 81, date: "2009-05-02T03:59:59.000Z"}, 
+                      {value: 64, date: "2009-05-03T03:59:59.000Z"}, 
+                      {value: 66, date: "2009-05-04T03:59:59.000Z"}, 
+                      {value: 79, date: "2009-05-05T03:59:59.000Z"}
+                    ]
+                 ],
+            options : { type: 'stackedBar'}
+    
+    };
+
+
+  An array of data objects and their optional series-specific options.  
   Each data object contains a series array, which contains arrays of series data points.
   Each data object can also take an optional series specific options property.
-  
-  example:
+
   
   var dataSeries = [
     {

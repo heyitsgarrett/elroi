@@ -67,20 +67,20 @@ $(document).ready(function(){
       return  formatted; 
     };
     
-    var line = elroi({$el:$('#line').find('.graph'), data: [{series:testSeries, options: {type:'line'}}]}).draw();
-    var line = elroi({$el:$('#step').find('.graph'), data: [{series:testSeries, options: {type:'step'}}]}).draw();
-    var line_small_points = elroi({$el:$('#line_small_points').find('.graph'), data: [{series:testSeries, options: {type:'line', showPoints:true, pointStroke:false}}]}).draw();
-    var line_points = elroi({$el:$('#line_points').find('.graph'), data: [{series:testSeries, options: {type:'line', showPoints:true}}]}).draw();
-    var line_points_animated = elroi({$el:$('#line_points_animated').find('.graph'), data: [{series:testSeries, options: {type:'line', showPoints:true , animatePoints:true}}]}).draw();
-    var multi_series_multi_axis = elroi({
-        $el:$('#multi_series_multi_axis').find('.graph'), 
-        data: [{
+    var line = elroi($('#line').find('.graph'), [{series:testSeries, options: {type:'line'}}]);
+    var line = elroi($('#step').find('.graph'), [{series:testSeries, options: {type:'step'}}]);
+    var line_small_points = elroi($('#line_small_points').find('.graph'), [{series:testSeries, options: {type:'line', showPoints:true, pointStroke:false}}]);
+    var line_points = elroi($('#line_points').find('.graph'), [{series:testSeries, options: {type:'line', showPoints:true}}]);
+    var line_points_animated = elroi($('#line_points_animated').find('.graph'), [{series:testSeries, options: {type:'line', showPoints:true , animatePoints:true}}]);
+    var multi_series_multi_axis = elroi(
+        $('#multi_series_multi_axis').find('.graph'), 
+        [{
                 series:testSeries, options: {type:'bar', showPoints:true , animatePoints:true}
             }, {
                 series:testSeries2, options: {type:'line', showPoints:true , animatePoints:true}
             }
         ],
-        options: {
+        {
             axes: {
                 y2: {
                     show: true,
@@ -88,27 +88,26 @@ $(document).ready(function(){
                 }
             }
         }
-    }).draw();
+    );
 
     var stackedBar = elroi(
+        $('#stacked-bar').find('.graph'), 
+        [{series:testSeries, options: {type:'stackedBar'}}],
         {
-            $el:$('#stacked-bar').find('.graph'), 
-            data: [{series:testSeries, options: {type:'stackedBar'}}],
-            options: {
                 tooltip : {
                     formatter: tipFormat
                 }
-            },
-            tooltips: tooltips
-        }
-    ).draw();
-    var pie = elroi({$el:$('#pie').find('.graph'), data: [{series:testSeries, options: {type:'pie'}}]}).draw();
-    var bar = elroi({ $el:$('#bar').find('.graph'), data: [{series:testSeries, options: {type:'bar'}}],
-    options: {
-        tooltip : {
-            formatter: tipFormat
-        }
-    },
-    tooltips: tooltips}).draw();
+        },
+        tooltips
+        
+    );
+    var pie = elroi($('#pie').find('.graph'), [{series:testSeries, options: {type:'pie'}}]);
+    var bar = elroi($('#bar').find('.graph'), [{series:testSeries, options: {type:'bar'}}],
+        {
+            tooltip : {
+                formatter: tipFormat
+            }
+        },
+        tooltips);
 
 });
