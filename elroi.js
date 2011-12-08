@@ -1,6 +1,6 @@
 (function($) {
 
-    var elroi = function(args) { if (args) { return new e(args); } };
+    var elroi = function(element, dataSeries, graphOptions, tooltips) { return new e(element, dataSeries, graphOptions, tooltips); };
 
     elroi.fn = {};
 
@@ -18,7 +18,7 @@
      * @return {function} draw Method to draw the graph
      * @return {function} update Updates the graph with new data
      */
-    function e(args) {
+    function e(element, dataSeries, graphOptions, tooltips) {
         var defaults = {
             animation: true,
             colors: ['#99cc33', '#ffee44', '#ffbb11', '#ee5500', '#33bbcc', '#88ddee'],
@@ -103,12 +103,12 @@
             padding: {top:15, right:20, bottom:18, left:50}
         };
 
-        var $el = $(args.$el)
+        var $el = $(element)
                     .addClass('elroi'),
             $paper = $('<div></div>')
                         .addClass('paper')
                         .appendTo($el),
-            options = $.extend(true, {}, defaults, args.options);
+            options = $.extend(true, {}, defaults, graphOptions);
 
         var width = $paper.width() || $el.width(),
             height = $paper.height() || $el.height();
@@ -118,12 +118,12 @@
             labelLineHeight: 12,
             width: width,
             height: height,
-            allSeries: args.data,
+            allSeries: dataSeries,
             $el: $el,
             paper: Raphael($paper.get(0), width, height),
             argGraphOpts: options,
             options: options,
-            tooltips: args.tooltips
+            tooltips: tooltips
         });
 
         var html = '<div class="elroi-tooltip"><div class="elroi-tooltip-content"></div></div>';

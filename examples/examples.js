@@ -140,9 +140,9 @@ $(document).ready(function(){
        series1String = "var series1 = " + series1String + ";";
        series2String = "var series2 = " + series2String + ";";
        
-       elroiCallRaw = "var myGraph = elroi({$el:$container, data: [{series:series1, options: ";
+       elroiCallRaw = "var myGraph = elroi($container, [{series:series1, options: ";
        elroiCallRaw += series1OptsString += "},{series:series2, options: " + series2OptsString;
-       elroiCallRaw += "}],options: " + graphOptsString + "}); \nmyGraph.draw();";
+       elroiCallRaw += "}], " + graphOptsString + "}); \nmyGraph.draw();";
        
        prettyElroiCall = js_beautify(elroiCallRaw);
        prettySeries1 = js_beautify(series1String);
@@ -159,14 +159,13 @@ $(document).ready(function(){
        var series1Opts = buildSeriesOptions('series-1');
        var series2Opts = buildSeriesOptions('series-2');
        var elroiSample = elroi(
-             {
-                 $el:$container, 
-                 data: [
+            $container, 
+            [
                     {series:series1, options: series1Opts},
                     {series:series2, options: series2Opts}
                  ],
-                 options: graphOptions
-              }).draw();
+                 graphOptions
+           ).draw();
         showCode(graphOptions, series1Opts, series2Opts);
     }
     drawGraph();
