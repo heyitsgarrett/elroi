@@ -97,6 +97,14 @@
        
     });
     
+    Q.test('elroi accepts a single series for data', function() {
+        var singleSeries = [ {value: 1}, {value: 2}, {value: 3}, {value: 4}, {value: 5}, {value: 6}, {value: 7}];
+        var expectedFormattedData = [{series: [[{value: 1},{value: 2},{value: 3},{value: 4},{value: 5},{value: 6},{value: 7}]]}];
+        var formattedData = elroi.fn.helpers.dataCleaner(singleSeries);
+        Q.deepEqual(formattedData, expectedFormattedData, 'Simple array is correctly reformmated');
+       
+    });
+    
     Q.test('default tooltips', function(){
         var expectedTooltips = ['45<br/>56', '57<br/>78'];
         var testSeries = [{
@@ -268,9 +276,13 @@
               $barGraph = $('<div/>')
                   .css({width: 900, height: 300})
                   .appendTo($('#test')),
-              $easyLineGraph =     $('<div/>')
+              $easyLineGraph = $('<div/>')
                         .css({width: 900, height: 300})
                         .appendTo($('#test')),
+
+              $singleSeriesLineGraph = $('<div/>')
+                            .css({width: 900, height: 300})
+                            .appendTo($('#test')),
                testSeriesData = 
                             [
                                 [
@@ -320,7 +332,15 @@
                   { animation: false }
               );
               elg = elroi($easyLineGraph, [1,3,7,8,9,2,10]);
-         
+              sslg = elroi($singleSeriesLineGraph, 
+                  [{value: 1, endDate: "2009-05-01T03:59:59.000Z"}, 
+                        {value: 2, endDate: "2009-06-01T03:59:59.000Z"}, 
+                        {value: 3, endDate: "2009-07-01T03:59:59.000Z"}, 
+                        {value: 4, endDate: "2009-08-01T03:59:59.000Z"}, 
+                        {value: 5, endDate: "2009-09-01T03:59:59.000Z"}, 
+                        {value: 6, endDate: "2009-10-01T03:59:59.000Z"}, 
+                        {value: 7, endDate: "2009-11-01T03:59:59.000Z"}]
+            );      
          });
     
     

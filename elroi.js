@@ -544,16 +544,28 @@
         },
 
         dataCleaner : function(allSeries) {
-            var cleanData = [];
+            var cleanData = [],
+                temp,
+                i;
 
             if(typeof(allSeries[0]) == "number") {
-                var temp = { series: [[]]};
-                for(var i=0; i<allSeries.length; i++) {
+                temp = { series: [[]]};
+                for(i=0; i<allSeries.length; i++) {
                     temp.series[0].push({value: allSeries[i]});
                 }
                 cleanData.push(temp);
             } else {
-                cleanData = allSeries;
+                if (allSeries[0] instanceof Object){
+                    if(allSeries[0].series === undefined) {
+                        temp = { series: [] };
+                        temp.series.push(allSeries);
+                        cleanData.push(temp);
+                    } else {
+                        cleanData = allSeries;
+                    }
+                } else {
+                    cleanData = allSeries;
+                }
             }
 
             return cleanData;
