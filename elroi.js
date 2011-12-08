@@ -555,7 +555,16 @@
                 }
                 cleanData.push(temp);
             } else {
-                if (allSeries[0] instanceof Object){
+                if(!(allSeries instanceof Array)) {
+                    if(!(allSeries.series[0] instanceof Array)) {
+                        temp = { series: [], options: {}};
+                        temp.series.push(allSeries.series);
+                        temp.options = allSeries.options || {};
+                        cleanData.push(temp);
+                    } else {
+                        cleanData = allSeries;
+                    }
+                } else if (!(allSeries[0] instanceof Array)){
                     if(allSeries[0].series === undefined) {
                         temp = { series: [] };
                         temp.series.push(allSeries);
@@ -598,8 +607,6 @@
             hasData;
 
         graph.allSeries = elroi.fn.helpers.dataCleaner(graph.allSeries);
-
-        console.log(graph.allSeries);
 
         seriesOptions = elroi.fn.helpers.seriesOptions(graph.allSeries, graph.options.seriesDefaults);
         maxVals = [];

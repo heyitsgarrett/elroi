@@ -101,7 +101,15 @@
         var singleSeries = [ {value: 1}, {value: 2}, {value: 3}, {value: 4}, {value: 5}, {value: 6}, {value: 7}];
         var expectedFormattedData = [{series: [[{value: 1},{value: 2},{value: 3},{value: 4},{value: 5},{value: 6},{value: 7}]]}];
         var formattedData = elroi.fn.helpers.dataCleaner(singleSeries);
-        Q.deepEqual(formattedData, expectedFormattedData, 'Simple array is correctly reformmated');
+        Q.deepEqual(formattedData, expectedFormattedData, 'Single series is correctly reformmated');
+       
+    });
+    
+    Q.test('elroi accepts a single series with options for data', function() {
+        var singleSeries = { series: [ {value: 1}, {value: 2}, {value: 3}, {value: 4}, {value: 5}, {value: 6}, {value: 7}], options: {type: 'bar'}};
+        var expectedFormattedData = [{series: [[{value: 1},{value: 2},{value: 3},{value: 4},{value: 5},{value: 6},{value: 7}]], options: {type: 'bar'}}];
+        var formattedData = elroi.fn.helpers.dataCleaner(singleSeries);
+        Q.deepEqual(formattedData, expectedFormattedData, 'Single series with options is correctly reformmated');
        
     });
     
@@ -283,6 +291,9 @@
               $singleSeriesLineGraph = $('<div/>')
                             .css({width: 900, height: 300})
                             .appendTo($('#test')),
+              $singleSeriesBarGraph = $('<div/>')
+                  .css({width: 900, height: 300})
+                  .appendTo($('#test')),                            
                testSeriesData = 
                             [
                                 [
@@ -340,7 +351,8 @@
                         {value: 5, endDate: "2009-09-01T03:59:59.000Z"}, 
                         {value: 6, endDate: "2009-10-01T03:59:59.000Z"}, 
                         {value: 7, endDate: "2009-11-01T03:59:59.000Z"}]
-            );      
+              );
+              ssbg = elroi($singleSeriesBarGraph, { series: [ {value: 1}, {value: 2}, {value: 3}, {value: 4}, {value: 5}, {value: 6}, {value: 7}], options: {type: 'bar'}});      
          });
     
     
