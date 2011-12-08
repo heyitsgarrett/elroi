@@ -134,9 +134,8 @@
                              .appendTo($('#test'));
          
          
-             var e = elroi({
-                 $el: $graph,
-                 data:
+             var e = elroi(
+                 $graph,
                  [
                          {
                              series:
@@ -167,7 +166,6 @@
                              }
                          }
                  ],
-                 options:
                  {
                      tooltip:
                      {
@@ -228,7 +226,6 @@
                      labelDateFormat: "M",
                      errorMessage: false
                  },
-                 tooltips:
                  [
                      {
                          dateRange:  "Apr 1 &ndash; Apr 30",
@@ -249,9 +246,7 @@
                      {dateRange: "Feb 1 &ndash; Feb 28",you: 748,unit: "kWh",drillLink: "/ei/app/myEnergyUse/usage/bill/2010/2?meterType=ELEC",drillMessage: "View each day"},
                      {dateRange: "Mar 1 &ndash; Mar 31",you: 748,unit: "kWh",drillLink: "/ei/app/myEnergyUse/usage/bill/2010/3?meterType=ELEC",drillMessage: "View each day"}
                  ]
-             });
-         
-             e.draw();
+             );
          
          });
          
@@ -298,25 +293,21 @@
                             ];
          
          
-             var lg = elroi({
-                 $el: $lineGraph,
-                 data: [ { series: testSeriesData, options : { type: 'line'} }],
-                 options: { animation: false }
-             }),
-             sbg = elroi({
-                  $el: $stackedBarGraph,
-                  data: [ { series: testSeriesData, options : { type: 'stackedBar'} }],
-                  options: { animation: false }
-              }),
-              bg = elroi({
-                  $el: $barGraph,
-                  data: [ { series: testSeriesData, options : { type: 'bar'} }],
-                  options: { animation: false }
-              });
-         
-             lg.draw();
-             sbg.draw();
-             bg.draw();
+             var lg = elroi(
+                 $lineGraph,
+                 [ { series: testSeriesData, options : { type: 'line'} }],
+                 { animation: false }
+             ),
+             sbg = elroi(
+                  $stackedBarGraph,
+                  [ { series: testSeriesData, options : { type: 'stackedBar'} }],
+                  { animation: false }
+              ),
+              bg = elroi(
+                  $barGraph,
+                  [ { series: testSeriesData, options : { type: 'bar'} }],
+                  { animation: false }
+              );
          
          });
     

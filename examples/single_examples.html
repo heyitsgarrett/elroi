@@ -57,10 +57,9 @@
           <div class="graph"></div>
           <pre>
             elroi(
-              { $el:$('#line').find('.graph'), 
-                data: [{series:testSeries, options: {type:'line'}}]
-              })
-              .draw()
+              $('#line').find('.graph'), 
+              [{series:testSeries, options: {type:'line'}}]
+            );
           </pre>
         </div>
 
@@ -69,13 +68,12 @@
             <div class="graph"></div>
           <pre>
             elroi(
-              { $el:$('#line').find('.graph'),
-                data: [
+              $('#line').find('.graph'),
+              [
                   {series:testSeries, 
                     options: {type:'line', showPoints:true, pointStroke:false}}}
                 ]
-              })
-              .draw()
+              )
           </pre>
         </div>
 
@@ -84,10 +82,9 @@
             <div class="graph"></div>
           <pre>
             elroi(
-              { $el:$('#line_points').find('.graph'),
-                data: [{series:testSeries, options: {type:'line', showPoints:true}}]
-              })
-              .draw()
+              $('#line_points').find('.graph'),
+              [{series:testSeries, options: {type:'line', showPoints:true}}]
+            );
           </pre>
         </div>
 
@@ -96,8 +93,8 @@
             <div class="graph"></div>
           <pre>
             elroi(
-              { $el:$('#line_points_animated').find('.graph'),
-                data: [
+              $('#line_points_animated').find('.graph'),
+              [
                   { series:testSeries, 
                     options: {
                       type:'line', 
@@ -109,8 +106,7 @@
                     }
                   }
                 ]
-              })
-              .draw()
+            );
           </pre>
         </div>
         
@@ -119,10 +115,9 @@
           <div class="graph"></div>
           <pre>
             elroi(
-              { $el:$('#step').find('.graph'), 
-                data: [{series:testSeries, options: {type:'step'}}]
-              })
-              .draw()
+              $('#step').find('.graph'), 
+              [{series:testSeries, options: {type:'step'}}]
+            );
           </pre>
         </div>
 
@@ -131,11 +126,9 @@
           <div class="graph"></div>
           <pre>
             elroi(
-              { $el:$('#stacked-bar').find('.graph'), 
-                data: [{series:testSeries, options: {type:'stackedBar'}}]
-              })
-              .draw();
-            
+              $('#stacked-bar').find('.graph'), 
+              [{series:testSeries, options: {type:'stackedBar'}}]
+              );
           </pre>
         </div>
         
@@ -144,11 +137,9 @@
            <div class="graph"></div>
            <pre>
              elroi(
-               { $el:$('#bar').find('.graph'), 
-                 data: [{series:testSeries, options: {type:'bar'}}]
-               })
-               .draw();
-             
+               $('#bar').find('.graph'), 
+               [{series:testSeries, options: {type:'bar'}}]
+             );
            </pre>
         </div>
 
@@ -157,10 +148,9 @@
             <div class="graph"></div>
             <pre>
               elroi(
-                { $el:$('#pie').find('.graph'), 
-                  data: [{series:testSeries, options: {type:'pie'}}]
-                })
-                .draw();
+                $('#pie').find('.graph'), 
+                [{series:testSeries, options: {type:'pie'}}]
+              );
             </pre>
         </div>
          
@@ -168,27 +158,27 @@
             <h2>Multiple Series with Multiple Axes</h2>
             <div class="graph"></div>
             <pre>
-              elroi({
-                    $el:$('#multi_series_multi_axis').find('.graph'), 
-                    data: [{
-                            series:testSeries, options: {
+              elroi(
+                $('#multi_series_multi_axis').find('.graph'), 
+                [{
+                      series:testSeries, options: {
                               type:'bar', showPoints:true , animatePoints:true
                             }
                         }, {
-                            series:testSeries2, options: {
+                        series:testSeries2, options: {
                               type:'line', showPoints:true , animatePoints:true
                             }
                         }
-                    ],
-                    options: {
-                        axes: {
-                            y2: {
-                                show: true,
-                                seriesIndex: 1
-                            }
-                        }
-                    }
-                }).draw();
+                ],
+                {
+                      axes: {
+                          y2: {
+                              show: true,
+                              seriesIndex: 1
+                          }
+                      }
+                }
+              );
             </pre>
         </div>
 
