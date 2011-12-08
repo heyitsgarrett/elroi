@@ -130,21 +130,27 @@ $(document).ready(function(){
    }
    
    function showCode(graphOpts, series1Opts, series2Opts){
-       var theCode = "";
        var series1String = JSON.stringify(series1);
        var series2String = JSON.stringify(series2);
        var graphOptsString = JSON.stringify(graphOpts);
        var series1OptsString = JSON.stringify(series1Opts);
        var series2OptsString = JSON.stringify(series2Opts);
+       var elroiCallRaw, prettySeries1, prettySeries2, prettyCall;
 
-       theCode = "var series1 = " + series1String + ";";
-       theCode += "var series2 = " + series2String + ";";
-       theCode += "var myGraph = elroi({$el:$container, data: [{series:series1, options: ";
-       theCode += series1OptsString += "},{series:series2, options: " + series2OptsString;
-       theCode += "}],options: " + graphOptsString + "}); \nmyGraph.draw();";
-       var prettied = js_beautify(theCode);
+       series1String = "var series1 = " + series1String + ";";
+       series2String = "var series2 = " + series2String + ";";
        
-       $("#the-code").text(prettied);
+       elroiCallRaw = "var myGraph = elroi({$el:$container, data: [{series:series1, options: ";
+       elroiCallRaw += series1OptsString += "},{series:series2, options: " + series2OptsString;
+       elroiCallRaw += "}],options: " + graphOptsString + "}); \nmyGraph.draw();";
+       
+       prettyElroiCall = js_beautify(elroiCallRaw);
+       prettySeries1 = js_beautify(series1String);
+       prettySeries2 = js_beautify(series2String);
+       
+       $("#elroi-call").text(prettyElroiCall);
+       $("#series-1-code").text(prettySeries1);
+       $("#series-2-code").text(prettySeries2);
    }
    
    function drawGraph() {
@@ -164,6 +170,16 @@ $(document).ready(function(){
         showCode(graphOptions, series1Opts, series2Opts);
     }
     drawGraph();
+   
+   $('#the-code').find('pre:not(#elroi-call)').hide();
+   $('#the-code a').click(function(e){
+       e.preventDefault();
+       var targetBlock = $($(this).attr('href'));
+       $('#the-code').find('pre').hide();
+       $('#the-code').find('li').removeClass('selected');
+       $(this).parents('li').addClass('selected');
+       targetBlock.show();
+   });
         
    $('#options-form input, #options-form select, #series-opts-form input, #series-opts-form select').change(drawGraph);
 });

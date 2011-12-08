@@ -37,6 +37,31 @@
                 height:0;
                 content: ".";
             }
+        #the-code ul {
+          list-style-type: none;
+          margin: 0;
+          padding: 0;
+        }    
+        #the-code li {
+            float: left;
+            margin: 0;
+            text-align: center;
+            width: 200px;
+        }
+        #the-code a {
+          border: 1px solid black;
+          border-bottom-width: 0;
+          display: block;
+          padding: 5px;
+        }
+        #the-code .selected {
+          font-weight: bold;
+        }
+        #the-code pre {
+          border: 1px solid black;
+          margin: 0;
+          padding: 20px;
+        }
       </style>
 
   </head>
@@ -253,8 +278,19 @@
       
     </div>
     
-    <pre id="the-code">
-    </pre>  
+    <div id="the-code">
+      <h2>The Code</h2>
+      <ul class="clearfix">
+        <li class="selected"><a href="#elroi-call">Elroi call</a></li>
+        <li><a href="#series-1-code">Series 1</a></li>
+        <li><a href="#series-2-code">Series 2</a></li>
+      </ul>
+      <pre id="elroi-call"></pre>  
+      <pre id="series-1-code"></pre>
+      <pre id="series-2-code"></pre>
+    </div>
+    
+    <p><a href="single_examples.html">See more examples</a></p>
     
   </body>
 </html>
