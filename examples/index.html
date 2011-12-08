@@ -1,196 +1,296 @@
 <html>
     <head>
-        <link href="../css/elroi.css" rel="stylesheet" type="text/css">
+      <link href="../css/elroi.css" rel="stylesheet" type="text/css">
 
-        <script type="text/javascript" src="../vendor/jquery/jquery.js"></script>
-        <script type="text/javascript" src="../vendor/raphael/raphael-1.5.2.js"></script>
+      <script type="text/javascript" src="../vendor/jquery/jquery.js"></script>
+      <script type="text/javascript" src="../vendor/raphael/raphael-1.5.2.js"></script>
+      <script type="text/javascript" src="../elroi.js"></script>
+      <script type="text/javascript" src="examples.js"></script>
+      <script type="text/javascript" src="beautify.js"></script>
+      
+      <style>
+        .graph { width: 800px; height: 300px; clear:both; margin:20px auto;}
+        .graph .paper {width: 800px; height: 300px;}
 
-        <script type="text/javascript" src="../elroi.js"></script>
-        <script type="text/javascript" src="examples.js"></script>
+        form {
+          font-size: 11px;
+          line-height: 12px;
+        }
+        form p {
+          margin: 2px 0;
+        }
+        form fieldset {
+          float: left;
+          width: 200px;
+        }
+        form fieldset fieldset {
+          width: 180px;
+        }
+        form > div {clear:both;}
+        #series-opts-form fieldset {width: 90%;}
+        #series-opts-form p {float: left;}
         
-        <style>
-          .sample { float: left; clear: both; margin-top: 30px; border-top: 1px solid #444;}
-          .sample .graph { float: left; width: 620px; height: 270px; }
-          .sample pre { float: left; border: 1px solid #000; background: #ccc; margin-left: 20px; padding: 20px;}
-        </style>
+        .clearfix:after{
+                display:block;
+                visibility:hidden;
+                clear:both;
+                height:0;
+                content: ".";
+            }
+        #the-code ul {
+          list-style-type: none;
+          margin: 0;
+          padding: 0;
+        }    
+        #the-code li {
+            float: left;
+            margin: 0;
+            text-align: center;
+            width: 200px;
+        }
+        #the-code a {
+          border: 1px solid black;
+          border-bottom-width: 0;
+          display: block;
+          padding: 5px;
+        }
+        #the-code .selected {
+          font-weight: bold;
+        }
+        #the-code pre {
+          border: 1px solid black;
+          margin: 0;
+          padding: 20px;
+        }
+      </style>
 
-    </head>
-    <body>
-        <h1>Sample Graphs</h1>
+  </head>
+  <body>
+    <h2>Graph Options</h2>
+    <div class="clearfix">
+      <form id="options-form" action="#" class="clearfix">
+        <fieldset>
+          <legend>Graph-wide</legend>
+          <p>
+            <input type="checkbox" id="animation" checked />
+            <label for="animation">Animation</label>
+          </p>
+          <p>
+            <label for="label-date-format">
+              Date format
+            </label>
+            <select id="label-date-format">
+              <option value="M">Month (short name)</option>
+              <option value="MM">Month (full)</option>
+              <option value="M d, y">Month d, y</option>
+              <option value="m/d/y">M/D/Y</option>
+            </select>
+          </p>  
+          <p>
+            <label for="error-message">Error message</label>
+            <input type="text" id="error-message" />
+          </p>
+          <p>
+            <label for="label-width">Label width</label>
+            <input type="text" id="label-width" value='auto' />
+          </p>
+          <p>
+            <input type="checkbox" id="show-tooltips" checked />
+            <label for="show-tooltips">Show tooltips</label>
+          </p>
+        </fieldset>
+      
+      
+        <fieldset>
+          <legend>Grid</legend>
+          <p>
+            <input type="checkbox" id="show-grid" checked />
+            <label for="show-grid">Show grid</label>
+          </p>
+          <p>
+            <input type="checkbox" id="show-baseline" checked />
+            <label for="show-baseline">Show baseline</label>
+          </p>
+          <p>
+            <input type="text" id="num-y-labels" value="5" />
+            <label for="num-y-labels">Number of Y labels</label>
+          </p>
         
-        <p>All examples are using this test series:</p>
-        <pre id="test-series">
-                          var testSeries = [
-                                [
-                                    {value: 683, endDate: "2009-05-01T03:59:59.000Z"},
-                                    {value: 689, endDate: "2009-06-01T03:59:59.000Z"},
-                                    {value: 708, endDate: "2009-07-01T03:59:59.000Z"},
-                                    {value: 680, endDate: "2009-08-01T03:59:59.000Z"},
-                                    {value: 690, endDate: "2009-09-01T03:59:59.000Z"},
-                                    {value: 682, endDate: "2009-10-01T03:59:59.000Z"},
-                                    {value: 685, endDate: "2009-11-01T03:59:59.000Z"},
-                                    {value: 707, endDate: "2009-12-01T04:59:59.000Z"},
-                                    {value: 702, endDate: "2010-01-01T04:59:59.000Z"},
-                                    {value: 653, endDate: "2010-02-01T04:59:59.000Z"},
-                                    {value: 748, endDate: "2010-03-01T04:59:59.000Z"},
-                                    {value: 748, endDate: "2010-04-01T03:59:59.000Z"}
-                                ],
-                                [
-                                    {value: 383, endDate: "2009-05-01T03:59:59.000Z"},
-                                    {value: 289, endDate: "2009-06-01T03:59:59.000Z"},
-                                    {value: 208, endDate: "2009-07-01T03:59:59.000Z"},
-                                    {value: 380, endDate: "2009-08-01T03:59:59.000Z"},
-                                    {value: 490, endDate: "2009-09-01T03:59:59.000Z"},
-                                    {value: 282, endDate: "2009-10-01T03:59:59.000Z"},
-                                    {value: 385, endDate: "2009-11-01T03:59:59.000Z"},
-                                    {value: 507, endDate: "2009-12-01T04:59:59.000Z"},
-                                    {value: 802, endDate: "2010-01-01T04:59:59.000Z"},
-                                    {value: 453, endDate: "2010-02-01T04:59:59.000Z"},
-                                    {value: 348, endDate: "2010-03-01T04:59:59.000Z"},
-                                    {value: 248, endDate: "2010-04-01T03:59:59.000Z"}
-                                ]
-                            ];
-                        </pre>
-        
-        <div class="sample" id="line">
-          <h2>Line Graph</h2>
-          <div class="graph"></div>
-          <pre>
-            elroi(
-              { $el:$('#line').find('.graph'), 
-                data: [{series:testSeries, options: {type:'line'}}]
-              })
-              .draw()
-          </pre>
-        </div>
-
-        <div class="sample" id="line_small_points">
-            <h2>Line Graph With Small Points</h2>
-            <div class="graph"></div>
-          <pre>
-            elroi(
-              { $el:$('#line').find('.graph'),
-                data: [
-                  {series:testSeries, 
-                    options: {type:'line', showPoints:true, pointStroke:false}}}
-                ]
-              })
-              .draw()
-          </pre>
-        </div>
-
-        <div class="sample" id="line_points">
-            <h2>Line Graph With Points</h2>
-            <div class="graph"></div>
-          <pre>
-            elroi(
-              { $el:$('#line_points').find('.graph'),
-                data: [{series:testSeries, options: {type:'line', showPoints:true}}]
-              })
-              .draw()
-          </pre>
-        </div>
-
-        <div class="sample" id="line_points_animated">
-            <h2>Line Graph With Points Animated</h2>
-            <div class="graph"></div>
-          <pre>
-            elroi(
-              { $el:$('#line_points_animated').find('.graph'),
-                data: [
-                  { series:testSeries, 
-                    options: {
-                      type:'line', 
-                      { type:'line', 
-                        showPoints:true , 
-                        animatePoints:true
-                      }
-                      }
-                    }
-                  }
-                ]
-              })
-              .draw()
-          </pre>
-        </div>
-        
-        <div class="sample" id="step">
-          <h2>Step Graph</h2>
-          <div class="graph"></div>
-          <pre>
-            elroi(
-              { $el:$('#step').find('.graph'), 
-                data: [{series:testSeries, options: {type:'step'}}]
-              })
-              .draw()
-          </pre>
-        </div>
-
-        <div class="sample" id="stacked-bar">
-          <h2>Stacked Bar Graph</h2>
-          <div class="graph"></div>
-          <pre>
-            elroi(
-              { $el:$('#stacked-bar').find('.graph'), 
-                data: [{series:testSeries, options: {type:'stackedBar'}}]
-              })
-              .draw();
+        </fieldset>
+        <fieldset>
+          <legend>X Axes</legend>
             
-          </pre>
-        </div>
+              <p>
+                <input type="checkbox" id="x1-show" checked />
+                <label for="x1-show">Show x1</label>
+              </p>
+
+              <p>
+                <input type="checkbox" id="x2-show" />
+                <label for="x2-show">Show x2</label>
+              </p>
+          </fieldset>  
+            <fieldset>
+              <legend>Y1</legend>
+              
+              <p>
+                <input type="checkbox" id="y1-show" checked />
+                <label for="y1-show">Show y1</label>
+              </p>
+              <p>
+                <label for="y1-unit">Unit</label>
+                <input type="text" id="y1-unit" value="" />
+              <p>
+              <p>
+                  <label for="y1-top-unit">Topmost unit</label>
+                  <input type="text" id="y1-top-unit" value="kWh" />
+              <p>
+              <p>
+                <input type="checkbox" id="y1-prefix-unit" />
+                <label for="y1-prefix-unit">Prefix unit</label>
+              </p>
+              <p>
+                <label for="y1-series-index">Derive from</label>
+                <select id="y1-series-index">
+                  <option value="0">Series 1</option>
+                  <option value="1">Series 2</option>
+                </select>
+              </p>
+            </fieldset>
+            
+            <fieldset>
+              <legend>Y2</legend>
+              
+              <p>
+                <input type="checkbox" id="y2-show" />
+                <label for="y2-show">Show y2</label>
+              </p>
+              <p>
+                <label for="y2-unit">Unit</label>
+                <input type="text" id="y2-unit" value="" />
+              <p>
+                <p>
+                  <label for="y2-top-unit">Topmost unit</label>
+                  <input type="text" id="y2-top-unit" value="" />
+                <p>
+                <input type="checkbox" id="y2-prefix-unit" />
+                <label for="y2-prefix-unit">Prefix unit</label>
+              </p>
+              <p>
+                <label for="y2-series-index">Derive from</label>
+                <select id="y2-series-index">
+                  <option value="0">Series 1</option>
+                  <option value="1">Series 2</option>
+                </select>
+              </p>
+            </fieldset>
+        </fieldset>
         
-        <div class="sample" id="bar">
-           <h2>Bar Graph</h2>
-           <div class="graph"></div>
-           <pre>
-             elroi(
-               { $el:$('#bar').find('.graph'), 
-                 data: [{series:testSeries, options: {type:'bar'}}]
-               })
-               .draw();
-             
-           </pre>
-        </div>
+      
+      </div>    
+      
+    </form>
+    
+    <form id="series-opts-form" class="clearfix">
+      <fieldset>
+        <legend>series 1</legend>
+        
+        <p>
+          <label for="series-1-type">Type</label>
+          <select id="series-1-type">
+            <option value="line">line</option>
+            <option value="pie">pie</option>
+            <option value="step">step</option>
+            <option value="bar">bar</option>  
+            <option value="stackedBar">stacked bar</option>       
+          </select>
+        </p>
+        
+        <p>
+          <input type="checkbox" id="series-1-show-points" />
+          <label for="series-1-show-points">Show points</label>
+        </p>
+        <p>
+          <input type="checkbox" id="series-1-fill-points" />
+          <label for="series-1-fill-points">Fill points</label>
+        </p>
+        <p>
+          <input type="checkbox" id="series-1-label-points" />
+          <label for="series-1-label-points">Label points</label>
+        </p>
+        <p>
+          <input type="checkbox" id="series-1-animate-points" />
+          <label for="series-1-animate-points">Animate points</label>
+        </p>
+        <p>
+          <input type="checkbox" id="series-1-point-stroke" checked />
+          <label for="series-1-point-stroke">Point-stroke</label>
+        </p>
+        <p>
+          <input type="checkbox" id="series-1-interpolate-nulls" />
+          <label for="series-1-interpolate-nulls">Interpolate nulls</label>
+        </p>
+        
+      </fieldset>
+      <fieldset>
+          <legend>series 2</legend>
 
-        <div class="sample" id="pie">
-            <h2>Pie Chart</h2>
-            <div class="graph"></div>
-            <pre>
-              elroi(
-                { $el:$('#pie').find('.graph'), 
-                  data: [{series:testSeries, options: {type:'pie'}}]
-                })
-                .draw();
-            </pre>
-        </div>
-         
-        <div class="sample" id="multi_series_multi_axis">
-            <h2>Multiple Series with Multiple Axes</h2>
-            <div class="graph"></div>
-            <pre>
-              elroi({
-                    $el:$('#multi_series_multi_axis').find('.graph'), 
-                    data: [{
-                            series:testSeries, options: {
-                              type:'bar', showPoints:true , animatePoints:true
-                            }
-                        }, {
-                            series:testSeries2, options: {
-                              type:'line', showPoints:true , animatePoints:true
-                            }
-                        }
-                    ],
-                    options: {
-                        axes: {
-                            y2: {
-                                show: true,
-                                seriesIndex: 1
-                            }
-                        }
-                    }
-                }).draw();
-            </pre>
-        </div>
+          <p>
+            <label for="series-2-type">Type</label>
+            <select id="series-2-type">
+              <option value="line">line</option>
+              <option value="pie">pie</option>
+              <option value="step">step</option>
+              <option value="bar">bar</option>  
+              <option value="stackedBar">stacked bar</option>       
+            </select>
+          </p>
 
-    </body>
+          <p>
+            <input type="checkbox" id="series-2-show-points" />
+            <label for="series-2-show-points">Show points</label>
+          </p>
+          <p>
+            <input type="checkbox" id="series-2-fill-points" />
+            <label for="series-2-fill-points">Fill points</label>
+          </p>
+          <p>
+            <input type="checkbox" id="series-2-label-points" />
+            <label for="series-2-label-points">Label points</label>
+          </p>
+          <p>
+            <input type="checkbox" id="series-2-animate-points" />
+            <label for="series-2-animate-points">Animate points</label>
+          </p>
+          <p>
+            <input type="checkbox" id="series-2-point-stroke" checked />
+            <label for="series-2-point-stroke">Point-stroke</label>
+          </p>
+          <p>
+            <input type="checkbox" id="series-2-interpolate-nulls" />
+            <label for="series-2-interpolate-nulls">Interpolate nulls</label>
+          </p>
+
+        </fieldset>
+    </form>
+
+    <div class="graph">
+      
+    </div>
+    
+    <div id="the-code">
+      <h2>The Code</h2>
+      <ul class="clearfix">
+        <li class="selected"><a href="#elroi-call">Elroi call</a></li>
+        <li><a href="#series-1-code">Series 1</a></li>
+        <li><a href="#series-2-code">Series 2</a></li>
+      </ul>
+      <pre id="elroi-call"></pre>  
+      <pre id="series-1-code"></pre>
+      <pre id="series-2-code"></pre>
+    </div>
+    
+    <p><a href="single_examples.html">See more examples</a></p>
+    
+  </body>
 </html>
