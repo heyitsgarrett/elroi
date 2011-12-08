@@ -345,12 +345,12 @@
               elg = elroi($easyLineGraph, [1,3,7,8,9,2,10]);
               sslg = elroi($singleSeriesLineGraph, 
                   [{value: 1, endDate: "2009-05-01T03:59:59.000Z"}, 
-                        {value: 2, endDate: "2009-06-01T03:59:59.000Z"}, 
-                        {value: 3, endDate: "2009-07-01T03:59:59.000Z"}, 
-                        {value: 4, endDate: "2009-08-01T03:59:59.000Z"}, 
-                        {value: 5, endDate: "2009-09-01T03:59:59.000Z"}, 
-                        {value: 6, endDate: "2009-10-01T03:59:59.000Z"}, 
-                        {value: 7, endDate: "2009-11-01T03:59:59.000Z"}]
+                        {value: 2, date: "2009-06-01T03:59:59.000Z"}, 
+                        {value: 3, date: "2009-07-01T03:59:59.000Z"}, 
+                        {value: 4, date: "2009-08-01T03:59:59.000Z"}, 
+                        {value: 5, date: "2009-09-01T03:59:59.000Z"}, 
+                        {value: 6, date: "2009-10-01T03:59:59.000Z"}, 
+                        {value: 7, date: "2009-11-01T03:59:59.000Z"}]
               );
               ssbg = elroi($singleSeriesBarGraph, { series: [ {value: 1}, {value: 2}, {value: 3}, {value: 4}, {value: 5}, {value: 6}, {value: 7}], options: {type: 'bar'}});      
          });

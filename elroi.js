@@ -700,11 +700,11 @@
                     startDate = new Date(this.startDate);
                 }
 
-                if (this.endDate) {
-                    endDate = new Date(this.endDate);
+                if (this.endDate || this.date) {
+                    endDate = this.endDate ? new Date(this.endDate) : this.date;
                 }
 
-                if (this.startDate && this.endDate) {
+                if (startDate && endDate) {
                     if (startDate.getMonth() == endDate.getMonth()) {
                         endDateFormat = endDateFormat.replace('M', '' && startDateFormat.match('M'));
                     }
@@ -713,13 +713,13 @@
                     }
                 }
 
-                if (this.startDate) {
+                if (startDate) {
                     label += elroi.fn.formatDate(startDateFormat, startDate);
                 }
-                if(this.startDate && this.endDate) {
+                if(startDate && endDate) {
                     label += " &ndash;";
                 }
-                if(this.endDate) {
+                if(endDate) {
                     label += elroi.fn.formatDate(endDateFormat, endDate);
                     label = label.replace(/\s/g, '&nbsp;');
                 }
