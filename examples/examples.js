@@ -142,7 +142,7 @@ $(document).ready(function(){
        
        elroiCallRaw = "var myGraph = elroi($container, [{series:series1, options: ";
        elroiCallRaw += series1OptsString += "},{series:series2, options: " + series2OptsString;
-       elroiCallRaw += "}], " + graphOptsString + "}); \nmyGraph.draw();";
+       elroiCallRaw += "}], " + graphOptsString + "});";
        
        prettyElroiCall = js_beautify(elroiCallRaw);
        prettySeries1 = js_beautify(series1String);
@@ -165,7 +165,7 @@ $(document).ready(function(){
                     {series:series2, options: series2Opts}
                  ],
                  graphOptions
-           ).draw();
+           );
         showCode(graphOptions, series1Opts, series2Opts);
     }
     drawGraph();

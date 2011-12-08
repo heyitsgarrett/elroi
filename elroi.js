@@ -121,7 +121,6 @@
             allSeries: dataSeries,
             $el: $el,
             paper: Raphael($paper.get(0), width, height),
-            argGraphOpts: options,
             options: options,
             tooltips: tooltips
         });
@@ -187,6 +186,8 @@
 
            draw();
         }
+
+        draw();
 
         return {
             graph: graph,
