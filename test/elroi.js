@@ -188,9 +188,9 @@
           ];
 
 
-         Q.equal(elroi.fn.helpers.determineDateFormat(subDaily), "hh:nn", "Under a day should get timestamps");
+         Q.equal(elroi.fn.helpers.determineDateFormat(subDaily), "h:nna", "Under a day should get timestamps");
          Q.equal(elroi.fn.helpers.determineDateFormat(monthlyGaps), "M", "Dates a month apart should give monthly formats");      
-         Q.equal(elroi.fn.helpers.determineDateFormat(withinAMonth), "d/m", "Dates within the same month should get day/month");
+         Q.equal(elroi.fn.helpers.determineDateFormat(withinAMonth), "M, d", "Dates within the same month should get day/month");
          Q.equal(elroi.fn.helpers.determineDateFormat(multiYear), "YY", "Year spanners should use the year");
     });
 
