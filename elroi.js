@@ -283,7 +283,7 @@
                     if(isDoubled) {
                         formattedDate += date.getFullYear();
                     } else {
-                        if(value.getFullYear() % 100 < 10){
+                        if(date.getFullYear() % 100 < 10){
                             formattedDate += 0;
                         }
                         formattedDate += date.getFullYear() % 100;
