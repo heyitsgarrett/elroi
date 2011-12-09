@@ -193,8 +193,33 @@
     </form>
     
     <form id="series-opts-form" class="clearfix">
-      <fieldset>
+      <fieldset id="series-1-fieldset">
         <legend>series 1</legend>
+        
+        <div class="clearfix">
+          <p>
+            <label for="series-1-num-points">Number of points</label>
+            <input id="series-1-num-points" value="12" />
+          </p>
+          <p>
+            <label for="series-1-num-subseries">Number of sub-series</label>
+            <input id="series-1-num-subseries" value="2" />
+          </p>
+          
+          <p>
+            <label for="series-1-start-date">Start date</label>
+            <input id="series-1-start-date" value="2009-05-01T03:59:59.000Z" />
+          </p>
+          
+          <p>
+            <label for="series-1-start-date">Time between points</label>
+            <input id="series-1-time-between-num" value="1" />
+            <select id="series-1-time-between-unit">
+              <option value="hours">hours</option>
+              <option value="days" selected>days</option>
+            </select>
+          </p>
+        </div>
         
         <p>
           <label for="series-1-type">Type</label>
@@ -233,46 +258,9 @@
         </p>
         
       </fieldset>
-      <fieldset>
-          <legend>series 2</legend>
-
-          <p>
-            <label for="series-2-type">Type</label>
-            <select id="series-2-type">
-              <option value="line">line</option>
-              <option value="pie">pie</option>
-              <option value="step">step</option>
-              <option value="bar">bar</option>  
-              <option value="stackedBar">stacked bar</option>       
-            </select>
-          </p>
-
-          <p>
-            <input type="checkbox" id="series-2-show-points" />
-            <label for="series-2-show-points">Show points</label>
-          </p>
-          <p>
-            <input type="checkbox" id="series-2-fill-points" />
-            <label for="series-2-fill-points">Fill points</label>
-          </p>
-          <p>
-            <input type="checkbox" id="series-2-label-points" />
-            <label for="series-2-label-points">Label points</label>
-          </p>
-          <p>
-            <input type="checkbox" id="series-2-animate-points" />
-            <label for="series-2-animate-points">Animate points</label>
-          </p>
-          <p>
-            <input type="checkbox" id="series-2-point-stroke" checked />
-            <label for="series-2-point-stroke">Point-stroke</label>
-          </p>
-          <p>
-            <input type="checkbox" id="series-2-interpolate-nulls" />
-            <label for="series-2-interpolate-nulls">Interpolate nulls</label>
-          </p>
-
-        </fieldset>
+      <div class="clearfix">
+        <input type="submit" value="Add a Series" id="add-series" />
+      </div>
     </form>
 
     <div class="graph">
@@ -281,14 +269,7 @@
     
     <div id="the-code">
       <h2>The Code</h2>
-      <ul class="clearfix">
-        <li class="selected"><a href="#elroi-call">Elroi call</a></li>
-        <li><a href="#series-1-code">Series 1</a></li>
-        <li><a href="#series-2-code">Series 2</a></li>
-      </ul>
       <pre id="elroi-call"></pre>  
-      <pre id="series-1-code"></pre>
-      <pre id="series-2-code"></pre>
     </div>
     
     <p><a href="single_examples.html">See more examples</a></p>
