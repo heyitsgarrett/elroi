@@ -7,7 +7,7 @@ since you can augment everything elroi does with straight HTML, CSS, and JavaScr
 Usage
 -----
 
-Elroi requires jQuery (http://jquery.com) and RaphaelJS (http://http://raphaeljs.com/).  To use elroi,
+Elroi requires jQuery http://jquery.com (tested with 1.6.4 and 1.7.1) and RaphaelJS (http://http://raphaeljs.com/).  To use elroi,
 include jQuery, Raphael, elroi.js, and elroi.css.  You can create and draw a graph with:
 
 var myGraph = elroi($element, dataSeries, [graphOptions], [tooltips]);
