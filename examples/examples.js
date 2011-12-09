@@ -110,31 +110,15 @@ $(document).ready(function(){
        return series;
    }
    
-   function showCode(graphOpts){
-      
-       var graphOptsString = JSON.stringify(graphOpts);
-       var seriesString,
-        prettySeriesString,
-        seriesOptsString,
-        seriesDisplayNum,
-        prettyElroiCall,
-        elroiCallString = "var myGraph = elroi($container, [";
-       
-       for(var i = 0; i < allSeriesData.length; i++) {
-           seriesDisplayNum = i+1;
-           seriesString = JSON.stringify(allSeriesData[i]);
-           seriesOptsString = JSON.stringify(allSeriesOpts[i])
-           elroiCallString += "{ series: " + seriesString + ", options: " + seriesOptsString;
-           
-           if(i !== allSeriesData.length - 1) {
-               elroiCallString += "}, ";
-           } else {
-               elroiCallString += "}";
-           }
-       }
-       elroiCallString += "], " + graphOptsString + ");";
-       
-       prettyElroiCall = js_beautify(elroiCallString);
+   function showCode(graphData, graphOpts){
+      var graphDataString = JSON.stringify(graphData),
+        graphOptsString = JSON.stringify(graphOpts),
+        rawCodeString = "var elroiSample = elroi($container, ",
+        prettyElroiCall;
+    
+       rawCodeString += graphDataString + ", ";
+       rawCodeString += graphOptsString + ");";
+       prettyElroiCall = js_beautify(rawCodeString);
        
        $("#elroi-call").text(prettyElroiCall);
    }
@@ -164,7 +148,7 @@ $(document).ready(function(){
             graphData,
             graphOptions
            );
-        showCode(graphOptions);
+        showCode(graphData, graphOptions);
     }
     drawGraph();
     
