@@ -1,65 +1,8 @@
 $(document).ready(function(){
    var $container = $('.graph');
-   var series1 = [
-       [
-           {value: 683, date: "2009-05-01T03:59:59.000Z"},
-           {value: 689, date: "2009-06-01T03:59:59.000Z"},
-           {value: 708, date: "2009-07-01T03:59:59.000Z"},
-           {value: 680, date: "2009-08-01T03:59:59.000Z"},
-           {value: 540, date: "2009-09-01T03:59:59.000Z"},
-           {value: 682, date: "2009-10-01T03:59:59.000Z"},
-           {value: 685, date: "2009-11-01T03:59:59.000Z"},
-           {value: 707, date: "2009-12-01T04:59:59.000Z"},
-           {value: 702, date: "2010-01-01T04:59:59.000Z"},
-           {value: 653, date: "2010-02-01T04:59:59.000Z"},
-           {value: 748, date: "2010-03-01T04:59:59.000Z"},
-           {value: 748, date: "2010-04-01T03:59:59.000Z"}
-       ],
-       [
-           {value: 383, date: "2009-05-01T03:59:59.000Z"},
-           {value: 289, date: "2009-06-01T03:59:59.000Z"},
-           {value: 208, date: "2009-07-01T03:59:59.000Z"},
-           {value: 380, date: "2009-08-01T03:59:59.000Z"},
-           {value: 490, date: "2009-09-01T03:59:59.000Z"},
-           {value: 282, date: "2009-10-01T03:59:59.000Z"},
-           {value: 385, date: "2009-11-01T03:59:59.000Z"},
-           {value: 507, date: "2009-12-01T04:59:59.000Z"},
-           {value: 802, date: "2010-01-01T04:59:59.000Z"},
-           {value: 453, date: "2010-02-01T04:59:59.000Z"},
-           {value: 348, date: "2010-03-01T04:59:59.000Z"},
-           {value: 248, date: "2010-04-01T03:59:59.000Z"}
-       ]
-   ];
-   var series2 = [
-       [
-           {value: 483, date: "2009-05-01T03:59:59.000Z"},
-           {value: 289, date: "2009-06-01T03:59:59.000Z"},
-           {value: 308, date: "2009-07-01T03:59:59.000Z"},
-           {value: 480, date: "2009-08-01T03:59:59.000Z"},
-           {value: 340, date: "2009-09-01T03:59:59.000Z"},
-           {value: 482, date: "2009-10-01T03:59:59.000Z"},
-           {value: 485, date: "2009-11-01T03:59:59.000Z"},
-           {value: 207, date: "2009-12-01T04:59:59.000Z"},
-           {value: 202, date: "2010-01-01T04:59:59.000Z"},
-           {value: 353, date: "2010-02-01T04:59:59.000Z"},
-           {value: 348, date: "2010-03-01T04:59:59.000Z"},
-           {value: 448, date: "2010-04-01T03:59:59.000Z"}
-       ],
-       [
-           {value: 83, date: "2009-05-01T03:59:59.000Z"},
-           {value: 89, date: "2009-06-01T03:59:59.000Z"},
-           {value: 8, date: "2009-07-01T03:59:59.000Z"},
-           {value: 80, date: "2009-08-01T03:59:59.000Z"},
-           {value: 90, date: "2009-09-01T03:59:59.000Z"},
-           {value: 82, date: "2009-10-01T03:59:59.000Z"},
-           {value: 85, date: "2009-11-01T03:59:59.000Z"},
-           {value: 7, date: "2009-12-01T04:59:59.000Z"},
-           {value: 2, date: "2010-01-01T04:59:59.000Z"},
-           {value: 53, date: "2010-02-01T04:59:59.000Z"},
-           {value: 48, date: "2010-03-01T04:59:59.000Z"},
-           {value: 48, date: "2010-04-01T03:59:59.000Z"}
-       ]
-   ];
+  
+   var allSeriesData = [];
+   var allSeriesOpts = [];
    var tooltips = ['tip 1', 'tip 2', 'tip 3', 'tip 4', 'tip 5', 'tip 6', 'tip 7', 'tip 8', 'tip', 'tip', 'tip', 'tip'];
    var tipFormat = function(tip) {
        var formatted = '<p>' + tip + '</p>';
@@ -119,66 +62,119 @@ $(document).ready(function(){
    
    function buildSeriesOptions(seriesId) {
        var seriesOpts = {};
-       seriesOpts.type = $('#' + seriesId + '-type').val();
-       seriesOpts.showPoints = $('#' + seriesId + '-show-points').is(':checked');
-       seriesOpts.fillPoints = $('#' + seriesId + '-fill-points').is(':checked');
-       seriesOpts.labelPoints = $('#' + seriesId + '-label-points').is(':checked');
-       seriesOpts.animatePoints = $('#' + seriesId + '-animate-points').is(':checked');
-       seriesOpts.pointStroke = $('#' + seriesId + '-point-stroke').is(':checked');      
-       seriesOpts.interpolateNulls = $('#' + seriesId + '-interpolate-nulls').is(':checked');
+       seriesOpts.type = $('#series-' + seriesId + '-type').val();
+       seriesOpts.showPoints = $('#series-' + seriesId + '-show-points').is(':checked');
+       seriesOpts.fillPoints = $('#series-' + seriesId + '-fill-points').is(':checked');
+       seriesOpts.labelPoints = $('#series-' + seriesId + '-label-points').is(':checked');
+       seriesOpts.animatePoints = $('#series-' + seriesId + '-animate-points').is(':checked');
+       seriesOpts.pointStroke = $('#series-' + seriesId + '-point-stroke').is(':checked');      
+       seriesOpts.interpolateNulls = $('#series-' + seriesId + '-interpolate-nulls').is(':checked');
+       
+       allSeriesOpts[seriesId-1] = seriesOpts;
+       
        return seriesOpts;
    }
    
-   function showCode(graphOpts, series1Opts, series2Opts){
-       var series1String = JSON.stringify(series1);
-       var series2String = JSON.stringify(series2);
+   function buildSeriesData(seriesId) {
+       var series = [], subseries, dataPoint;
+       
+       var numSubSeries = parseInt($('#series-' + seriesId + '-num-subseries').val(), 10),
+            numPoints = parseInt($('#series-' + seriesId + '-num-points').val(), 10),
+            startDate = Date.parse($('#series-' + seriesId + '-start-date').val()),
+            timeBetweenNum = parseInt($('#series-' + seriesId + '-time-between-num').val(), 10),
+            timeBetweenUnits = $('#series-' + seriesId + '-time-between-unit').val(),
+            dateMultiplier;
+            
+      switch(timeBetweenUnits) {
+          case "hours":
+            dateMultiplier = 1000 * 60 * 60;
+            break;
+          case "days":
+            dateMultiplier = 1000 * 60 * 60 * 24;
+            break;
+      }
+       
+       for(var i = 0; i < numSubSeries; i++) {
+           subseries = [];
+           for(var j=0; j < numPoints; j++) {
+               dataPoint = {
+                 value: Math.floor(Math.random()*101),
+                 date: startDate + j * dateMultiplier   
+               };
+               subseries.push(dataPoint);
+           }
+           series.push(subseries);
+       }
+       
+       allSeriesData[seriesId - 1] = series;
+       return series;
+   }
+   
+   function showCode(graphOpts){
+      
        var graphOptsString = JSON.stringify(graphOpts);
-       var series1OptsString = JSON.stringify(series1Opts);
-       var series2OptsString = JSON.stringify(series2Opts);
-       var elroiCallRaw, prettySeries1, prettySeries2, prettyCall;
-
-       series1String = "var series1 = " + series1String + ";";
-       series2String = "var series2 = " + series2String + ";";
+       var seriesString,
+        prettySeriesString,
+        seriesOptsString,
+        seriesDisplayNum,
+        prettyElroiCall,
+        elroiCallString = "var myGraph = elroi($container, [";
        
-       elroiCallRaw = "var myGraph = elroi($container, [{series:series1, options: ";
-       elroiCallRaw += series1OptsString += "},{series:series2, options: " + series2OptsString;
-       elroiCallRaw += "}], " + graphOptsString + "});";
+       for(var i = 0; i < allSeriesData.length; i++) {
+           seriesDisplayNum = i+1;
+           seriesString = JSON.stringify(allSeriesData[i]);
+           seriesOptsString = JSON.stringify(allSeriesOpts[i])
+           elroiCallString += "{ series: " + seriesString + ", options: " + seriesOptsString;
+           
+           if(i !== allSeriesData.length - 1) {
+               elroiCallString += "}, ";
+           } else {
+               elroiCallString += "}";
+           }
+       }
+       elroiCallString += "], " + graphOptsString + ");";
        
-       prettyElroiCall = js_beautify(elroiCallRaw);
-       prettySeries1 = js_beautify(series1String);
-       prettySeries2 = js_beautify(series2String);
+       prettyElroiCall = js_beautify(elroiCallString);
        
        $("#elroi-call").text(prettyElroiCall);
-       $("#series-1-code").text(prettySeries1);
-       $("#series-2-code").text(prettySeries2);
+   }
+   
+   function addASeries(){
+       var $seriesForms = $("#series-opts-form");
+       var num = $seriesForms.find('fieldset').length + 1;
+       var template = $('#series-1-fieldset').html();
+       template = template.replace(/series-1/g, 'series-' + num);
+       
+       $('<fieldset />').addClass('clearfix').html(template).insertBefore($('#add-series').parent());
+       drawGraph();
    }
    
    function drawGraph() {
        $container.children().remove();
+       var graphData = [];
+       $('#series-opts-form fieldset').each(function(i){
+           var seriesNum = i+1;
+           var seriesOpts = buildSeriesOptions(seriesNum);
+           var seriesData = buildSeriesData(seriesNum);
+           graphData.push({series:seriesData, options: seriesOpts});
+       });
        var graphOptions = buildGraphOpts();
-       var series1Opts = buildSeriesOptions('series-1');
-       var series2Opts = buildSeriesOptions('series-2');
        var elroiSample = elroi(
             $container, 
-            [
-                    {series:series1, options: series1Opts},
-                    {series:series2, options: series2Opts}
-                 ],
-                 graphOptions
+            graphData,
+            graphOptions
            );
-        showCode(graphOptions, series1Opts, series2Opts);
+        showCode(graphOptions);
     }
     drawGraph();
-   
-   $('#the-code').find('pre:not(#elroi-call)').hide();
-   $('#the-code a').click(function(e){
+    
+   $('#add-series').click(function(e){
        e.preventDefault();
-       var targetBlock = $($(this).attr('href'));
-       $('#the-code').find('pre').hide();
-       $('#the-code').find('li').removeClass('selected');
-       $(this).parents('li').addClass('selected');
-       targetBlock.show();
+       addASeries();
+   });
+   $('#series-opts-form').submit(function(e){
+      e.preventDefault(); 
    });
         
-   $('#options-form input, #options-form select, #series-opts-form input, #series-opts-form select').change(drawGraph);
+   $('#options-form input, #options-form select, #series-opts-form input, #series-opts-form select').live('change',drawGraph);
 });
