@@ -1,21 +1,24 @@
+# Elroi
+
+## About
+
 Elroi is a graphing library built for Opower's Astro web application
 
 It is based on the Raphael JavaScript library, meaning that every element
 in the chart is essentially an HTML element. This has powerful implications,
 since you can augment everything elroi does with straight HTML, CSS, and JavaScript.
 
-Usage
------
+## Usage
 
 Elroi requires jQuery http://jquery.com (tested with 1.6.4 and 1.7.1) and RaphaelJS http://http://raphaeljs.com/ (1.5.2).  To use elroi,
 include jQuery, Raphael, elroi.js, and elroi.css.  You can create and draw a graph with:
 
-var myGraph = elroi($element, dataSeries, [graphOptions], [tooltips]);
+    var myGraph = elroi($element, dataSeries, [graphOptions], [tooltips]);
 
 $element - a jQuery object for the HMTL element that will contain the graph.  The height and width of the graph elroi creates are determined
 by your styles on $element.
 
-  example: var $element = $('#my-graph-container');
+    example: var $element = $('#my-graph-container');`
 
 data - The data to graph.  Elroi will accept a variety of formats for this.
   
@@ -106,13 +109,13 @@ options - An object to configure graph-wide options.  This is where you can set 
 
 For a ton of usage examples, see
 
-  examples/index.html
-  examples/examples.js
+* examples/index.html
+* examples/examples.js
 
+---
 
+## Development
 
-Development
------------
 There are two scripts to aid in developing elroi:
 
   bin/combine.sh -- Combines all of the elroi source files into a single elroi.js library.
@@ -122,24 +125,22 @@ There are two scripts to aid in developing elroi:
                     The list of directories that watch.rb will listen to is defined in
                     watchr_script.file
 
-Development Requirements
-------------------------
-To work with combine.sh and watch.rb, you'll need to install two ruby gems:
+## Development Requirements
+
+To work with combine.sh and watch.sh, you'll need to install two ruby gems:
 
   gem install watchr
   gem install sprockets
 
-Test
-----
+## Test
 
 Tests are written in QUnit. To run the tests, open this in any browser:
 
   test/index.html
 
+---
 
+##  License
 
-
-  License
-  -----
-  Distributes under the Apache License, see LICENSE.txt
+Distributes under the Apache License, see LICENSE.txt
 
