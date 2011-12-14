@@ -123,26 +123,25 @@ For a ton of usage examples, see
 
 There are two scripts to aid in developing elroi:
 
-  bin/combine.sh -- Combines all of the elroi source files into a single elroi.js library.
-  bin/watch.sh   -- When invoked, this script listens for changes in the working directory
-                    and runs combine.sh to regenerate the elroi.js library.
+* bin/combine.sh
+    Combines all of the elroi source files into a single elroi.js library.
+* bin/watch.sh
+    When invoked, this script listens for changes in the working directory and runs combine.sh to regenerate the elroi.js library.
 
-                    The list of directories that watch.rb will listen to is defined in
-                    watchr_script.file
+    The list of directories that watch.rb will listen to is defined in *watchr_script.file*
 
 ### Development Requirements
 
 To work with combine.sh and watch.sh, you'll need to install two ruby gems:
 
-  gem install watchr
-  gem install sprockets
+    gem install watchr
+    gem install sprockets
 
 ### Test
 
 Tests are written in QUnit. To run the tests, open this in any browser:
 
-  test/index.html
-
+    test/index.html
 
 ##  License
 
