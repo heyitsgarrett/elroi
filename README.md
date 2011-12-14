@@ -15,18 +15,20 @@ include jQuery, Raphael, elroi.js, and elroi.css.  You can create and draw a gra
 
     var myGraph = elroi($element, dataSeries, [graphOptions], [tooltips]);
 
-$element - a jQuery object for the HMTL element that will contain the graph.  The height and width of the graph elroi creates are determined
+### $element
+A jQuery object for the HMTL element that will contain the graph.  The height and width of the graph elroi creates are determined
 by your styles on $element.
 
     example: var $element = $('#my-graph-container');`
 
-data - The data to graph.  Elroi will accept a variety of formats for this.
+### data
+The data to graph.  Elroi will accept a variety of formats for this.
   
-An array.
+An array:
     
     dataSeries = [4,6,8,4,3,9];
     
-An array of values and dates
+An array of values and dates:
 
     dataSeries = [
         {value: 4, date: "2009-05-01T03:59:59.000Z"}, 
@@ -94,7 +96,8 @@ Each data object can also take an optional series specific options property.
         }
     ];
 
-options - An object to configure graph-wide options.  This is where you can set colors, axes, tooltips, animation, and other things.
+### options
+An object to configure graph-wide options.  This is where you can set colors, axes, tooltips, animation, and other things.
 
     var graphOptions = {
         axes: {
@@ -107,6 +110,8 @@ options - An object to configure graph-wide options.  This is where you can set 
             }
         }
     };
+
+---
 
 For a ton of usage examples, see
 
